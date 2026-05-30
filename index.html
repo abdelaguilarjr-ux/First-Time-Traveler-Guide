@@ -1051,8 +1051,8 @@ a{color:var(--navy-700);text-decoration:none}
 @media(max-width:520px){.scroll-top{bottom:18px;left:auto;right:18px}}
 
 /* Reveal animation */
-.reveal{opacity:0;transform:perspective(1100px) rotateX(-78deg);transform-origin:top center;transition:opacity 750ms var(--ease),transform 860ms var(--ease);will-change:transform,opacity}
-.reveal.in{opacity:1;transform:perspective(1100px) rotateX(0deg)}
+.reveal{opacity:0;transform:translateY(22px);transition:opacity 650ms var(--ease),transform 650ms var(--ease)}
+.reveal.in{opacity:1;transform:none}
 
 /* Mobile cleanups */
 @media(max-width:680px){
@@ -2502,9 +2502,13 @@ document.addEventListener('keydown',e=>{
 
   var mx=0,my=0;
   window.addEventListener('mousemove',function(e){mx=(e.clientX/window.innerWidth-0.5)*2;my=(e.clientY/window.innerHeight-0.5)*2});
-  var t=0;
+  var t=0,active=true;
+  // Pause Three.js when hero is off-screen so it doesn't burn CPU while scrolling
+  new IntersectionObserver(function(entries){active=entries[0].isIntersecting},{threshold:0}).observe(hdr);
   (function loop(){
-    requestAnimationFrame(loop);t+=0.007;
+    requestAnimationFrame(loop);
+    if(!active)return;
+    t+=0.007;
     meshes.forEach(function(m,i){var s=0.5+i*0.15;m.rotation.x+=0.003*s;m.rotation.y+=0.004*s;m.position.y+=Math.sin(t*s+i)*0.003});
     scene.rotation.y+=(mx*0.08-scene.rotation.y)*0.04;
     scene.rotation.x+=(-my*0.05-scene.rotation.x)*0.04;
