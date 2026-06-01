@@ -75,11 +75,19 @@ export const CATEGORY_STYLES: Record<PoiCategory, CategoryStyle> = {
 export interface TerminalGeometry {
   id: TerminalId;
   name: string;
-  /** World-space centre of the slab on the ground plane [x, z]. */
+  /**
+   * Centre-line of the concourse on the ground plane as [x, z] control points,
+   * ordered west → east. The 3D slab is an extruded ribbon that follows this
+   * curve with rounded end caps, so the footprint matches the organic shape of
+   * the official map instead of a rectangle.
+   */
+  centerline: [number, number][];
+  /** Concourse width (full, across the curve). */
+  width: number;
+  /** Which side of the curve the gate fingers face: +1 or -1. */
+  gateSide: 1 | -1;
+  /** Approx [x, z] used to frame the camera (curve midpoint region). */
   center: [number, number];
-  /** Length along X (west↔east) and depth along Z (front↔back). */
-  length: number;
-  depth: number;
   floors: FloorId[];
 }
 
@@ -87,17 +95,37 @@ export const TERMINALS: Record<TerminalId, TerminalGeometry> = {
   T1: {
     id: "T1",
     name: "Terminal 1",
-    center: [-42, 0],
-    length: 62,
-    depth: 16,
+    // Curved boomerang concourse: rounded west bulb (101-115) → main body
+    // (120-139) → gentle rise toward the inter-terminal corridor.
+    centerline: [
+      [-72, 9],
+      [-58, 2],
+      [-44, -2],
+      [-30, -2.5],
+      [-17, 0.5],
+      [-9, 7],
+    ],
+    width: 14,
+    gateSide: -1,
+    center: [-40, -1],
     floors: [100, 200, 300],
   },
   T2: {
     id: "T2",
     name: "Terminal 2",
-    center: [44, 0],
-    length: 50,
-    depth: 14,
+    // Mirror crescent on the east side: corridor end → body (201-220) →
+    // rounded east bulb (221-225).
+    centerline: [
+      [9, 7],
+      [18, 0.5],
+      [31, -2.5],
+      [45, -2],
+      [59, 2],
+      [71, 9],
+    ],
+    width: 13,
+    gateSide: -1,
+    center: [40, -1],
     floors: [100, 200, 300],
   },
 };
@@ -105,7 +133,6 @@ export const TERMINALS: Record<TerminalId, TerminalGeometry> = {
 // Vertical layout of the "exploded" building.
 export const FLOOR_GAP = 7;
 export const SLAB_THICKNESS = 1.2;
-export const GATE_MARGIN = 5; // unused length at each end where gates aren't placed
 
 export function floorIndex(floor: FloorId): number {
   return (floor - 100) / 100;
@@ -147,22 +174,6 @@ export const GATES: Gate[] = [
   ...T1_GATES.map((n): Gate => ({ number: n, terminal: "T1" })),
   ...T2_GATES.map((n): Gate => ({ number: n, terminal: "T2" })),
 ];
-
-/** World position of a gate marker along its terminal's airside edge. */
-export function gatePosition(
-  terminal: TerminalId,
-  indexInTerminal: number,
-  countInTerminal: number,
-  y: number,
-): [number, number, number] {
-  const t = TERMINALS[terminal];
-  const usable = t.length - GATE_MARGIN * 2;
-  const frac = countInTerminal > 1 ? indexInTerminal / (countInTerminal - 1) : 0.5;
-  const x = t.center[0] - usable / 2 + frac * usable;
-  // Airside edge faces the viewer (−Z), gate nub sits just outside the slab.
-  const z = t.center[1] - t.depth / 2 - 1.6;
-  return [x, y, z];
-}
 
 export function gatesForTerminal(terminal: TerminalId): string[] {
   return terminal === "T1" ? T1_GATES : T2_GATES;
@@ -228,15 +239,6 @@ export const POIS: Poi[] = [
   { id: "t2-300-food1", terminal: "T2", floor: 300, category: "food", es: "Restaurantes", en: "Food Court", u: -0.2, v: -0.2 },
   { id: "t2-300-food2", terminal: "T2", floor: 300, category: "food", es: "Restaurantes", en: "Food Court", u: 0.3, v: 0.1 },
 ];
-
-/** World position for a POI on top of its floor slab. */
-export function poiPosition(poi: Poi): [number, number, number] {
-  const t = TERMINALS[poi.terminal];
-  const x = t.center[0] + poi.u * (t.length / 2 - GATE_MARGIN);
-  const z = t.center[1] + poi.v * (t.depth / 2 - 2);
-  const y = floorBaseY(poi.floor) + SLAB_THICKNESS;
-  return [x, y, z];
-}
 
 // ── Airlines (placeholder for the upcoming search step) ──────────────────────────
 // Real gate↔airline assignments are dynamic; Copa Airlines is the hub carrier and

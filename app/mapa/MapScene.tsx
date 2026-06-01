@@ -2,24 +2,28 @@
 
 import { useEffect, useMemo, useRef } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
-import { Html, OrbitControls, RoundedBox, ContactShadows } from "@react-three/drei";
+import { Html, OrbitControls, ContactShadows } from "@react-three/drei";
 import * as THREE from "three";
 
 import {
   CATEGORY_STYLES,
-  FLOOR_GAP,
-  GATES,
   POIS,
   SLAB_THICKNESS,
   TERMINALS,
-  gatePosition,
   gatesForTerminal,
-  poiPosition,
   floorBaseY,
   type FloorId,
   type Poi,
   type TerminalId,
 } from "./tocumenData";
+import {
+  airsideAccentCurve,
+  connectorEndpoints,
+  gateLayout,
+  poiPosition,
+  terminalMidpoint,
+  terminalRibbonGeometry,
+} from "./geometry";
 
 export type Focus = "all" | TerminalId;
 
@@ -28,7 +32,6 @@ export interface MapSelection {
   activeFloor: FloorId;
   selectedGate: string | null;
   selectedPoiId: string | null;
-  /** ids/numbers matched by the search box, highlighted in the scene. */
   highlightGates: Set<string>;
   highlightPois: Set<string>;
 }
@@ -41,7 +44,7 @@ interface SceneProps extends MapSelection {
 const BRAND = "#1466B8";
 const ACCENT = "#EE7D22";
 
-// ── Camera rig: glides toward the focused terminal / floor / gate ──────────────
+// ── Camera rig ──────────────────────────────────────────────────────────────────
 function CameraRig({ focus, activeFloor, selectedGate }: MapSelection) {
   const { camera } = useThree();
   const controls = useRef<React.ComponentRef<typeof OrbitControls>>(null);
@@ -53,21 +56,21 @@ function CameraRig({ focus, activeFloor, selectedGate }: MapSelection) {
     const focusY = floorBaseY(activeFloor) + 2;
 
     if (selectedGate) {
-      const gate = GATES.find((g) => g.number === selectedGate);
-      if (gate) {
-        const list = gatesForTerminal(gate.terminal);
-        const idx = list.indexOf(gate.number);
-        const [gx, , gz] = gatePosition(gate.terminal, idx, list.length, focusY);
-        wantPos.current.set(gx, focusY + 20, gz + 30);
-        wantTarget.current.set(gx, focusY, gz);
+      const list = gatesForTerminal(selectedGate.startsWith("2") ? "T2" : "T1");
+      const term: TerminalId = selectedGate.startsWith("2") ? "T2" : "T1";
+      const idx = gatesForTerminal(term).indexOf(selectedGate);
+      if (idx >= 0) {
+        const { position } = gateLayout(term, idx, list.length, focusY);
+        wantPos.current.set(position[0], focusY + 22, position[2] + 32);
+        wantTarget.current.set(position[0], focusY, position[2]);
       }
     } else if (focus === "all") {
-      wantPos.current.set(0, 82, 122);
-      wantTarget.current.set(0, 4, 0);
+      wantPos.current.set(0, 86, 124);
+      wantTarget.current.set(0, 2, 0);
     } else {
-      const t = TERMINALS[focus];
-      wantPos.current.set(t.center[0] - 4, 50, t.center[1] + 70);
-      wantTarget.current.set(t.center[0], focusY, t.center[1] - 2);
+      const c = TERMINALS[focus].center;
+      wantPos.current.set(c[0] - 2, 52, c[1] + 74);
+      wantTarget.current.set(c[0], focusY, c[1]);
     }
     animUntil.current = performance.now() + 1400;
   }, [focus, activeFloor, selectedGate]);
@@ -87,14 +90,14 @@ function CameraRig({ focus, activeFloor, selectedGate }: MapSelection) {
       enableDamping
       dampingFactor={0.08}
       minDistance={22}
-      maxDistance={220}
+      maxDistance={240}
       maxPolarAngle={Math.PI / 2.15}
       target={[0, 4, 0]}
     />
   );
 }
 
-// ── A single floor slab ────────────────────────────────────────────────────────
+// ── Floor slab (extruded curved ribbon) ─────────────────────────────────────────
 function FloorSlab({
   terminal,
   floor,
@@ -106,51 +109,49 @@ function FloorSlab({
   active: boolean;
   ghost: boolean;
 }) {
-  const t = TERMINALS[terminal];
-  const y = floorBaseY(floor) + SLAB_THICKNESS / 2;
-  const opacity = ghost ? 0.14 : active ? 1 : 0.34;
+  const geo = useMemo(() => terminalRibbonGeometry(terminal), [terminal]);
+  const accent = useMemo(() => airsideAccentCurve(terminal), [terminal]);
+  const baseY = floorBaseY(floor);
+  const opacity = ghost ? 0.13 : active ? 1 : 0.32;
+  const [mx, mz] = terminalMidpoint(terminal);
 
   return (
     <group>
-      <RoundedBox
-        args={[t.length, SLAB_THICKNESS, t.depth]}
-        radius={0.45}
-        smoothness={4}
-        position={[t.center[0], y, t.center[1]]}
+      <mesh
+        geometry={geo}
+        rotation={[-Math.PI / 2, 0, 0]}
+        position={[0, baseY, 0]}
         castShadow={active}
         receiveShadow
       >
         <meshStandardMaterial
           color={active ? "#eef2f7" : "#c7ced8"}
-          roughness={0.85}
-          metalness={0.05}
+          roughness={0.82}
+          metalness={0.04}
           transparent
           opacity={opacity}
           emissive={active ? BRAND : "#000000"}
-          emissiveIntensity={active ? 0.04 : 0}
+          emissiveIntensity={active ? 0.05 : 0}
         />
-      </RoundedBox>
+      </mesh>
 
-      {/* Airside accent strip (where the gates are) */}
+      {/* Airside accent strip following the concourse curve */}
       {!ghost && (
-        <mesh
-          position={[t.center[0], y + SLAB_THICKNESS / 2 + 0.01, t.center[1] - t.depth / 2 + 1.1]}
-          rotation={[-Math.PI / 2, 0, 0]}
-        >
-          <planeGeometry args={[t.length - 2, 1.6]} />
+        <mesh position={[0, baseY + SLAB_THICKNESS + 0.32, 0]}>
+          <tubeGeometry args={[accent, 64, 0.32, 8, false]} />
           <meshStandardMaterial
             color={BRAND}
+            roughness={0.5}
             transparent
-            opacity={active ? 0.9 : 0.3}
-            roughness={0.6}
+            opacity={active ? 0.95 : 0.35}
           />
         </mesh>
       )}
 
       {/* Information rotunda landmark */}
       {!ghost && (
-        <mesh position={[t.center[0], y + SLAB_THICKNESS / 2 + 0.4, t.center[1] + 1]} castShadow={active}>
-          <cylinderGeometry args={[2.4, 2.4, 0.8, 40]} />
+        <mesh position={[mx, baseY + SLAB_THICKNESS + 0.45, mz]} castShadow={active}>
+          <cylinderGeometry args={[2.6, 2.6, 0.9, 44]} />
           <meshStandardMaterial
             color={active ? "#dbe4ef" : "#bcc4cf"}
             transparent
@@ -163,34 +164,37 @@ function FloorSlab({
   );
 }
 
-// ── Gate marker ─────────────────────────────────────────────────────────────────
+// ── Gate marker (finger pier + pin) ─────────────────────────────────────────────
 function GateMarker({
-  terminal,
   number,
   position,
+  rotationY,
   showLabel,
   selected,
   highlighted,
   onSelect,
 }: {
-  terminal: TerminalId;
   number: string;
   position: [number, number, number];
+  rotationY: number;
   showLabel: boolean;
   selected: boolean;
   highlighted: boolean;
   onSelect: () => void;
 }) {
-  const [x, y, z] = position;
   const emphasised = selected || highlighted;
   const color = selected ? ACCENT : highlighted ? "#10b981" : BRAND;
   const scale = emphasised ? 1.5 : 1;
 
   return (
-    <group position={[x, y, z]} onClick={(e) => { e.stopPropagation(); onSelect(); }}>
-      {/* jet-bridge nub linking to the slab */}
-      <mesh position={[0, 0.2, 0.9]}>
-        <boxGeometry args={[1, 0.4, 1.8]} />
+    <group
+      position={position}
+      rotation={[0, rotationY, 0]}
+      onClick={(e) => { e.stopPropagation(); onSelect(); }}
+    >
+      {/* finger pier reaching back into the concourse (local −z) */}
+      <mesh position={[0, 0.2, -1.2]} castShadow>
+        <boxGeometry args={[1.1, 0.5, 2.6]} />
         <meshStandardMaterial color="#9aa6b4" roughness={0.8} />
       </mesh>
       {/* pylon */}
@@ -239,7 +243,7 @@ function GateMarker({
   );
 }
 
-// ── Point-of-interest marker (pin) ──────────────────────────────────────────────
+// ── POI marker ──────────────────────────────────────────────────────────────────
 function PoiMarker({
   poi,
   selected,
@@ -258,12 +262,10 @@ function PoiMarker({
 
   return (
     <group position={[x, y, z]} onClick={(e) => { e.stopPropagation(); onSelect(); }}>
-      {/* pole */}
       <mesh position={[0, headY / 2, 0]}>
         <cylinderGeometry args={[0.08, 0.08, headY, 10]} />
         <meshStandardMaterial color="#7c8794" roughness={0.8} />
       </mesh>
-      {/* pin head */}
       <mesh position={[0, headY, 0]} castShadow scale={emphasised ? 1.25 : 1}>
         <sphereGeometry args={[0.9, 24, 24]} />
         <meshStandardMaterial
@@ -317,12 +319,12 @@ function PoiMarker({
   );
 }
 
-// ── Big floating terminal label (overview mode) ─────────────────────────────────
+// ── Big terminal label (overview) ───────────────────────────────────────────────
 function TerminalLabel({ terminal }: { terminal: TerminalId }) {
-  const t = TERMINALS[terminal];
+  const [mx, mz] = terminalMidpoint(terminal);
   return (
     <Html
-      position={[t.center[0], 14, t.center[1]]}
+      position={[mx, 15, mz - 10]}
       center
       distanceFactor={120}
       zIndexRange={[5, 0]}
@@ -339,21 +341,24 @@ function TerminalLabel({ terminal }: { terminal: TerminalId }) {
           whiteSpace: "nowrap",
         }}
       >
-        {t.name}
+        {TERMINALS[terminal].name}
       </div>
     </Html>
   );
 }
 
-// ── Connector corridor between the two terminals ────────────────────────────────
+// ── Inter-terminal corridor ─────────────────────────────────────────────────────
 function Connector() {
-  const x1 = TERMINALS.T1.center[0] + TERMINALS.T1.length / 2;
-  const x2 = TERMINALS.T2.center[0] - TERMINALS.T2.length / 2;
-  const mid = (x1 + x2) / 2;
-  const len = x2 - x1;
+  const { from, to } = connectorEndpoints();
+  const mx = (from[0] + to[0]) / 2;
+  const mz = (from[1] + to[1]) / 2;
+  const dx = to[0] - from[0];
+  const dz = to[1] - from[1];
+  const len = Math.hypot(dx, dz);
+  const angle = Math.atan2(dx, dz);
   return (
-    <mesh position={[mid, SLAB_THICKNESS / 2, 0]} receiveShadow>
-      <boxGeometry args={[len, SLAB_THICKNESS * 0.7, 5]} />
+    <mesh position={[mx, SLAB_THICKNESS / 2, mz]} rotation={[0, angle, 0]} receiveShadow>
+      <boxGeometry args={[5, SLAB_THICKNESS * 0.7, len]} />
       <meshStandardMaterial color="#b7c0cb" roughness={0.85} />
     </mesh>
   );
@@ -372,7 +377,6 @@ export default function MapScene(props: SceneProps) {
     onSelectPoi,
   } = props;
 
-  // Which terminals/floors to render.
   const renderPlan = useMemo(() => {
     if (focus === "all") {
       return (Object.keys(TERMINALS) as TerminalId[]).map((id) => ({
@@ -380,27 +384,16 @@ export default function MapScene(props: SceneProps) {
         floors: [100 as FloorId],
         ghost: false,
         labelGates: false,
-        showPois: false,
-        bigLabel: true,
       }));
     }
     const other = (Object.keys(TERMINALS) as TerminalId[]).filter((id) => id !== focus);
     return [
-      {
-        terminal: focus,
-        floors: TERMINALS[focus].floors,
-        ghost: false,
-        labelGates: true,
-        showPois: true,
-        bigLabel: false,
-      },
+      { terminal: focus, floors: TERMINALS[focus].floors, ghost: false, labelGates: true },
       ...other.map((id) => ({
         terminal: id,
         floors: [100 as FloorId],
         ghost: true,
         labelGates: false,
-        showPois: false,
-        bigLabel: false,
       })),
     ];
   }, [focus]);
@@ -416,14 +409,13 @@ export default function MapScene(props: SceneProps) {
         intensity={1.15}
         castShadow
         shadow-mapSize={[2048, 2048]}
-        shadow-camera-left={-110}
-        shadow-camera-right={110}
-        shadow-camera-top={110}
-        shadow-camera-bottom={-110}
+        shadow-camera-left={-120}
+        shadow-camera-right={120}
+        shadow-camera-top={120}
+        shadow-camera-bottom={-120}
       />
       <directionalLight position={[-50, 30, -20]} intensity={0.3} color="#bcd2ff" />
 
-      {/* click empty space to deselect */}
       <mesh
         position={[0, -0.6, 0]}
         rotation={[-Math.PI / 2, 0, 0]}
@@ -432,29 +424,21 @@ export default function MapScene(props: SceneProps) {
           onSelectPoi(null);
         }}
       >
-        <planeGeometry args={[420, 420]} />
+        <planeGeometry args={[460, 460]} />
         <meshStandardMaterial color="#eaf1f8" roughness={1} />
       </mesh>
 
-      <ContactShadows
-        position={[0, 0.02, 0]}
-        scale={260}
-        far={40}
-        blur={2.4}
-        opacity={0.32}
-        resolution={1024}
-      />
+      <ContactShadows position={[0, 0.02, 0]} scale={300} far={40} blur={2.4} opacity={0.3} resolution={1024} />
 
       <Connector />
 
       {renderPlan.map((plan) =>
         plan.floors.map((floor) => {
           const isActive = !plan.ghost && (focus === "all" || floor === activeFloor);
-          const t = TERMINALS[plan.terminal];
-
-          // gates render at the active floor height (or ground in overview)
-          const gateY =
-            floorBaseY(focus === "all" ? 100 : activeFloor) + SLAB_THICKNESS;
+          const [wx, wz] = terminalMidpoint(plan.terminal);
+          const showGatesHere =
+            !plan.ghost && (focus === "all" ? floor === 100 : floor === activeFloor);
+          const gateY = floorBaseY(focus === "all" ? 100 : activeFloor) + SLAB_THICKNESS;
           const gateList = gatesForTerminal(plan.terminal);
 
           return (
@@ -466,10 +450,9 @@ export default function MapScene(props: SceneProps) {
                 ghost={plan.ghost}
               />
 
-              {/* Floor label on focused terminal */}
               {!plan.ghost && focus !== "all" && (
                 <Html
-                  position={[t.center[0] - t.length / 2 - 1, floorBaseY(floor) + 1, t.center[1]]}
+                  position={[wx, floorBaseY(floor) + 1, wz + 10]}
                   center
                   distanceFactor={70}
                   zIndexRange={[8, 0]}
@@ -485,31 +468,32 @@ export default function MapScene(props: SceneProps) {
                       whiteSpace: "nowrap",
                     }}
                   >
-                    {floor}
+                    Nivel {floor}
                   </div>
                 </Html>
               )}
 
-              {/* Gates — only on the lowest rendered floor of each terminal */}
-              {!plan.ghost && (focus === "all" ? floor === 100 : floor === activeFloor) &&
-                gateList.map((number, i) => (
-                  <GateMarker
-                    key={number}
-                    terminal={plan.terminal}
-                    number={number}
-                    position={gatePosition(plan.terminal, i, gateList.length, gateY)}
-                    showLabel={plan.labelGates}
-                    selected={selectedGate === number}
-                    highlighted={highlightGates.has(number)}
-                    onSelect={() => onSelectGate(number)}
-                  />
-                ))}
+              {showGatesHere &&
+                gateList.map((number, i) => {
+                  const { position, rotationY } = gateLayout(plan.terminal, i, gateList.length, gateY);
+                  return (
+                    <GateMarker
+                      key={number}
+                      number={number}
+                      position={position}
+                      rotationY={rotationY}
+                      showLabel={plan.labelGates}
+                      selected={selectedGate === number}
+                      highlighted={highlightGates.has(number)}
+                      onSelect={() => onSelectGate(number)}
+                    />
+                  );
+                })}
             </group>
           );
         }),
       )}
 
-      {/* POIs for the active terminal + floor */}
       {focus !== "all" &&
         POIS.filter((p) => p.terminal === focus && p.floor === activeFloor).map((poi) => (
           <PoiMarker
@@ -521,7 +505,6 @@ export default function MapScene(props: SceneProps) {
           />
         ))}
 
-      {/* Big terminal names in overview */}
       {focus === "all" &&
         (Object.keys(TERMINALS) as TerminalId[]).map((id) => (
           <TerminalLabel key={id} terminal={id} />
