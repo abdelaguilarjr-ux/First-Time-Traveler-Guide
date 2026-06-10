@@ -28,10 +28,8 @@ export function initKiosk3D(opts){
   const P = {
     baseYaw: 90,           // deg: rotate model so screen (+X) faces camera (+Z)
     meshName: 'G-Object001',
-    corr: [-90, 0, 90],    // deg correction euler (CSS +Z -> screen normal, up=+Y)
-    offset: [0, 0, 0.02],  // local offset along screen axes (world units)
-    uiH: 1040,             // UI design height in px (maps to screen vertical extent)
-    screenVworld: 0.899,   // measured screen vertical extent (world units @ base)
+    zEpsilon: 0.02,        // outward push (device units) so the UI sits above the glass
+    uiH: 1040,             // UI design height in px (fallback if screenEl has no layout)
     camZ: 9, fov: 30,
     // ---- reframe: crop to the kiosk's top half + center the display ----
     cropSpan: 2.2,         // world-units of model height shown vertically (model is 4 tall → ~top 55%)
@@ -108,22 +106,45 @@ export function initKiosk3D(opts){
   deviceWGL.add(anchor);
   let anchorReady = false;
 
+  // Derive the display face straight from the panel mesh geometry: position,
+  // orientation and px→world scale are measured, not hand-tuned, so the CSS
+  // screen lands exactly on the glass regardless of the model's node transforms.
   function placeAnchor(screenMesh){
     deviceWGL.updateWorldMatrix(true, true);
-    const wp = screenMesh.getWorldPosition(new THREE.Vector3());
-    const wq = screenMesh.getWorldQuaternion(new THREE.Quaternion());
+    const geo = screenMesh.geometry;
+    geo.computeBoundingBox();
+    const size = geo.boundingBox.getSize(new THREE.Vector3());
+    const ctr  = geo.boundingBox.getCenter(new THREE.Vector3());
+    const AX = { x: new THREE.Vector3(1,0,0), y: new THREE.Vector3(0,1,0), z: new THREE.Vector3(0,0,1) };
+    const axes = ['x','y','z'].sort((a,b) => size[a] - size[b]);
+    const nAxis = axes[0];                       // thinnest slab axis = screen normal
+    const m3 = new THREE.Matrix3().setFromMatrix4(screenMesh.matrixWorld);
+    const ctrW = ctr.clone().applyMatrix4(screenMesh.matrixWorld);
+    const camW = camera.getWorldPosition(new THREE.Vector3());
+    const nW = AX[nAxis].clone().transformDirection(screenMesh.matrixWorld);
+    if (nW.dot(camW.sub(ctrW)) < 0) nW.negate(); // normal must face the camera
+    // up = remaining axis closest to world +Y; right completes the basis
+    let uAxis = axes[1], uW = AX[axes[1]].clone().transformDirection(screenMesh.matrixWorld);
+    const alt = AX[axes[2]].clone().transformDirection(screenMesh.matrixWorld);
+    if (Math.abs(alt.y) > Math.abs(uW.y)) { uAxis = axes[2]; uW = alt; }
+    if (uW.y < 0) uW.negate();
+    uW.addScaledVector(nW, -uW.dot(nW)).normalize();
+    const rW = new THREE.Vector3().crossVectors(uW, nW).normalize();
+    const worldQ = new THREE.Quaternion().setFromRotationMatrix(new THREE.Matrix4().makeBasis(rW, uW, nW));
+    // slab center pushed out to its front face
+    const nLen = AX[nAxis].clone().applyMatrix3(m3).length();
+    const faceW = ctrW.clone().addScaledVector(nW, size[nAxis] / 2 * nLen);
+    // px → device-local scale, from the measured world height of the panel
+    const uLen = AX[uAxis].clone().applyMatrix3(m3).length();
+    const devScale = deviceWGL.getWorldScale(new THREE.Vector3()).x || 1;
+    const hPx = screenEl.offsetHeight || P.uiH;
+    anchor.position.copy(deviceWGL.worldToLocal(faceW));
+    P._screenY = anchor.position.y;              // remember the panel height for reframing
     const dq = deviceWGL.getWorldQuaternion(new THREE.Quaternion());
-    // convert to deviceWGL-local so the device transform isn't double-counted
-    anchor.position.copy(deviceWGL.worldToLocal(wp.clone()));
-    P._screenY = anchor.position.y;            // remember the panel height for reframing
-    const localQ = dq.clone().invert().multiply(wq);
-    const corr = new THREE.Quaternion().setFromEuler(new THREE.Euler(P.corr[0]*D2R, P.corr[1]*D2R, P.corr[2]*D2R));
-    anchor.quaternion.copy(localQ).multiply(corr);
-    const pxToWorld = P.screenVworld / P.uiH;
-    anchor.scale.setScalar(pxToWorld);
+    anchor.quaternion.copy(dq.invert().multiply(worldQ));
+    anchor.scale.setScalar((size[uAxis] * uLen) / devScale / hPx);
     anchor.updateMatrix();
-    // local offset along screen plane (x,y) + outward (z), in WORLD units
-    anchor.translateX(P.offset[0]); anchor.translateY(P.offset[1]); anchor.translateZ(P.offset[2]);
+    anchor.translateZ(P.zEpsilon);               // keep the UI just above the glass
     anchor.updateMatrix();
     anchorReady = true;
   }
@@ -142,11 +163,15 @@ export function initKiosk3D(opts){
     m.traverse(o => { if (o.isMesh){ o.castShadow = false; o.frustumCulled = false;
       if (o.material){ o.material.envMapIntensity = 1.2; } } });
     deviceWGL.add(m);
+    m.updateWorldMatrix(true, true);
     // find screen mesh
     let screenMesh = null;
     m.traverse(o => { if (o.isMesh && o.name === P.meshName) screenMesh = o; });
-    if (!screenMesh){ // fallback: highest mesh
-      let topY = -1e9; m.traverse(o => { if (o.isMesh){ const v=new THREE.Vector3(); o.getWorldPosition(v); if (v.y>topY){topY=v.y; screenMesh=o;} } });
+    if (!screenMesh){ // fallback: topmost mesh by geometry bounds (the display panel)
+      let topY = -1e9;
+      m.traverse(o => { if (o.isMesh){ o.geometry.computeBoundingBox();
+        const c = o.geometry.boundingBox.getCenter(new THREE.Vector3()).applyMatrix4(o.matrixWorld);
+        if (c.y > topY){ topY = c.y; screenMesh = o; } } });
     }
     if (screenMesh) placeAnchor(screenMesh);
     modelReady = true;
