@@ -11,6 +11,9 @@
 <!-- Section 04 · 3D Online Check-In -->
 <link rel="stylesheet" href="assets/ci3d.css">
 <link rel="stylesheet" href="assets/ci3d-screens.css">
+<!-- Section 05 · 3D Self Check-In Kiosk -->
+<link rel="stylesheet" href="assets/kiosk3d.css">
+<link rel="stylesheet" href="assets/kiosk3d-screens.css">
 <script type="importmap">
 {"imports":{
   "three":"https://cdn.jsdelivr.net/npm/three@0.161.0/build/three.module.js",
@@ -1080,7 +1083,7 @@ a{color:var(--navy-700);text-decoration:none}
 <!-- TOP NAV -->
 <nav class="topnav">
   <div class="topnav-brand" onclick="scrollToTop()">
-    <a class="cwt-logo sm on-dark" aria-label="CWTSatoTravel"><img src="assets/cwt-logo.png" alt="CWTSatoTravel"></a>
+    <a class="cwt-logo sm on-dark" data-comment-anchor="b0265676a7-span" aria-label="CWTSatoTravel"><img src="assets/cwt-logo.png" alt="CWTSatoTravel"></a>
   </div>
   <div class="topnav-meta" style="display:none">
     <span class="dot"></span>
@@ -1510,7 +1513,7 @@ a{color:var(--navy-700);text-decoration:none}
         <span><span class="en">Weapons</span><span class="es">Armas</span></span>
         <span class="stat">✖ <span class="en">Never</span><span class="es">Nunca</span></span>
       </div>
-      <div class="pi never">
+      <div class="pi never" data-comment-anchor="063a8a1c26-div">
         <div class="ico-tile"><svg viewBox="0 0 48 48" fill="none"><circle cx="22" cy="30" r="11" fill="currentColor" opacity=".18"/><circle cx="22" cy="30" r="11" stroke="currentColor" stroke-width="2.2"/><path d="M22 19V11M28 13l4-3M16 13l-4-3" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M30 11l3-1m4 1l1-3m-1 7l3 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="17" cy="27" r="2" fill="#fff" opacity=".55"/></svg></div>
         <span><span class="en">Explosives</span><span class="es">Explosivos</span></span>
         <span class="stat">✖ <span class="en">Never</span><span class="es">Nunca</span></span>
@@ -1649,7 +1652,7 @@ a{color:var(--navy-700);text-decoration:none}
       <div><h5>Sherpa</h5><p><span class="en">Restrictions by destination</span><span class="es">Restricciones por destino</span></p></div>
       <span class="arr">↗</span>
     </a>
-    <a href="https://www.copaair.com/es-gs/requisitos-de-viaje/" target="_blank" rel="noopener" class="req-link">
+    <a href="https://www.copaair.com/es-gs/requisitos-de-viaje/" target="_blank" rel="noopener" class="req-link" data-comment-anchor="4827027cf4-a">
       <div class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 00-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z" fill="currentColor"/></svg></div>
       <div><h5>Copa Travel Reqs</h5><p><span class="en">Carrier-specific tool</span><span class="es">Herramienta de Copa</span></p></div>
       <span class="arr">↗</span>
@@ -1955,107 +1958,238 @@ a{color:var(--navy-700);text-decoration:none}
     <div class="sec-head-body">
       <span class="t-label coral"><span class="en">Section 05 · Kiosk</span><span class="es">Sección 05 · Kiosco</span></span>
       <h2><span class="en">Self-check at the kiosk.</span><span class="es">Auto-registro en el kiosco.</span></h2>
-      <p><span class="en">Didn't make it to online check-in? Use a self-service kiosk in your terminal. Same outcome, four steps, under three minutes.</span><span class="es">¿No hiciste check-in en línea? Usa un kiosco de autoservicio en tu terminal. Mismo resultado, cuatro pasos, menos de tres minutos.</span></p>
+      <p><span class="en">Didn't make it to online check-in? Use a self-service kiosk in your terminal. Same outcome — walk through it step by step below, in under three minutes.</span><span class="es">¿No hiciste check-in en línea? Usa un kiosco de autoservicio en tu terminal. Mismo resultado — recórrelo paso a paso abajo, en menos de tres minutos.</span></p>
     </div>
   </div>
 
-  <div class="steps-wrap reveal" style="grid-template-columns:1.05fr 1fr">
-    <div class="kiosk-stage">
-      <div>
-        <div class="kiosk">
-          <div class="kiosk-screen" id="kioskScreen">
-            <div class="brand">
-              <span class="name">Copa Airlines</span>
-              <span class="lang">EN / ES</span>
-            </div>
-            <div class="kiosk-progress" id="kioskProgress"><i class="on"></i><i></i><i></i><i></i></div>
-            <div class="kiosk-pages" id="kioskPages">
-              <!-- Page 1: Welcome -->
-              <div class="kiosk-page show" data-kpage="1">
-                <h4><span class="en">Welcome — let's get you checked in</span><span class="es">Bienvenido — comencemos tu check-in</span></h4>
-                <p><span class="en">Tap one of the options below to start.</span><span class="es">Toca una opción para comenzar.</span></p>
-                <div class="kiosk-actions">
-                  <div class="btn primary is-hot"><span class="num">1</span><span><span class="en">Scan your passport</span><span class="es">Escanea tu pasaporte</span></span></div>
-                  <div class="btn"><span class="num">2</span><span><span class="en">Enter PNR manually</span><span class="es">Ingresa PNR manualmente</span></span></div>
-                  <div class="btn"><span class="num">3</span><span><span class="en">Scan e-ticket barcode</span><span class="es">Escanea código del e-ticket</span></span></div>
-                </div>
-              </div>
-              <!-- Page 2: Scan -->
-              <div class="kiosk-page" data-kpage="2">
-                <h4><span class="en">Scanning your passport…</span><span class="es">Escaneando tu pasaporte…</span></h4>
-                <p><span class="en">Place it photo-side down on the scanner.</span><span class="es">Colócalo con la foto hacia abajo.</span></p>
-                <div class="k-scan">
-                  <div class="passport-card">
-                    <div class="em">United States of America</div>
-                    <div class="ti">Passport · Pasaporte</div>
-                    <div class="ph"></div>
-                    <div class="lines"><i></i><i></i><i></i></div>
-                  </div>
-                  <div class="beam"></div>
-                  <div class="hint"><span class="dot"></span><span class="en">Reading MRZ…</span><span class="es">Leyendo MRZ…</span></div>
-                </div>
-              </div>
-              <!-- Page 3: Seat -->
-              <div class="kiosk-page" data-kpage="3">
-                <h4><span class="en">Pick your seat</span><span class="es">Elige tu asiento</span></h4>
-                <div class="k-flight">
-                  <span class="code">CM 761</span>
-                  <span class="rt">PTY → MIA</span>
-                  <span class="date">12 APR</span>
-                </div>
-                <div class="kdiv"><span class="en">Cabin map</span><span class="es">Mapa de cabina</span></div>
-                <div class="k-seats">
-                  <div>A</div><div>B</div><div>C</div><div class="aisle">·</div><div>D</div><div>E</div>
-                  <div class="x">14A</div><div>14B</div><div>14C</div><div class="aisle">·</div><div>14D</div><div>14E</div>
-                  <div>15A</div><div class="sel">15B</div><div>15C</div><div class="aisle">·</div><div>15D</div><div>15E</div>
-                  <div>16A</div><div>16B</div><div>16C</div><div class="aisle">·</div><div class="x">16D</div><div>16E</div>
-                  <div>17A</div><div>17B</div><div class="x">17C</div><div class="aisle">·</div><div>17D</div><div>17E</div>
-                </div>
-                <div class="k-confirm"><span class="en">Confirm seat 15B</span><span class="es">Confirmar asiento 15B</span> →</div>
-              </div>
-              <!-- Page 4: Printing -->
-              <div class="kiosk-page" data-kpage="4">
-                <div class="k-print">
-                  <div class="ring"></div>
-                  <div>
-                    <div class="msg"><span class="en">Printing your boarding pass</span><span class="es">Imprimiendo tu pase</span></div>
-                    <div class="sub"><span class="en">…and bag tags if you have checked luggage.</span><span class="es">…y etiquetas si tienes maletas.</span></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="kiosk-base"><div class="slot"></div></div>
-          <div class="k-paper" aria-hidden="true">
-            <div class="top"><span>Boarding Pass</span><span>CM 761</span></div>
-            <div class="route">PTY <span class="ar">→</span> MIA</div>
-            <div class="meta"><span>SEAT <b>15B</b></span><span>GATE <b>209</b></span><span>GRP <b>3</b></span></div>
-            <div class="bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <!-- 3D Self Check-In Kiosk experience -->
+  <div class="kk3d" id="kk3d">
+  <div class="kk3d-track" id="kkTrack">
+    <div class="kk3d-stage" id="kkStage">
+      <div class="kk3d-gl" id="kkGL"></div>
+      <div class="kk3d-css" id="kkCSS"></div>
+
+      <!-- editorial captions -->
+      <div class="kk3d-copy" id="kkCopy">
+        <div class="kk3d-step on" data-s="1">
+          <div class="kk3d-kicker"><span class="idx">01</span><span class="of"><span class="en">Step 1 of 7</span><span class="es">Paso 1 de 7</span></span></div>
+          <h3><span class="en">Find a <em>self check-in</em> kiosk.</span><span class="es">Busca un kiosco de <em>auto check-in</em>.</span></h3>
+          <p><span class="en">Near the airline counters you'll see rows of touchscreen kiosks. Walk up to any free one and tap to begin.</span><span class="es">Cerca de los mostradores verás filas de kioscos táctiles. Acércate a uno libre y toca para comenzar.</span></p>
+          <div class="irl"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v6m0 0l3-3m-3 3L9 5"/><rect x="4" y="10" width="16" height="12" rx="2"/></svg><div><span class="en">No app or login needed — the kiosk works for any passenger on the flight.</span><span class="es">No necesitas app ni inicio de sesión — el kiosco sirve para cualquier pasajero del vuelo.</span></div></div>
+        </div>
+        <div class="kk3d-step" data-s="2">
+          <div class="kk3d-kicker"><span class="idx">02</span><span class="of"><span class="en">Step 2 of 7</span><span class="es">Paso 2 de 7</span></span></div>
+          <h3><span class="en">Identify yourself.</span><span class="es">Identifícate.</span></h3>
+          <p><span class="en">Scan your passport in the reader, or type your confirmation code. The kiosk finds your booking instantly.</span><span class="es">Escanea tu pasaporte en el lector, o escribe tu código de confirmación. El kiosco encuentra tu reserva al instante.</span></p>
+          <div class="irl"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/></svg><div><span class="en">Place the photo page flat on the glass — the scanner does the rest.</span><span class="es">Coloca la página de la foto sobre el cristal — el escáner hace el resto.</span></div></div>
+        </div>
+        <div class="kk3d-step" data-s="3">
+          <div class="kk3d-kicker"><span class="idx">03</span><span class="of"><span class="en">Step 3 of 7</span><span class="es">Paso 3 de 7</span></span></div>
+          <h3><span class="en">Confirm your trip.</span><span class="es">Confirma tu viaje.</span></h3>
+          <p><span class="en">Check that the flight, passenger name and travel document are correct before you continue.</span><span class="es">Verifica que el vuelo, el nombre del pasajero y el documento sean correctos antes de continuar.</span></p>
+          <div class="irl"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg><div><span class="en">Always double-check the destination and date match your plans.</span><span class="es">Siempre verifica que el destino y la fecha coincidan con tus planes.</span></div></div>
+        </div>
+        <div class="kk3d-step" data-s="4">
+          <div class="kk3d-kicker"><span class="idx">04</span><span class="of"><span class="en">Step 4 of 7</span><span class="es">Paso 4 de 7</span></span></div>
+          <h3><span class="en">Pick your seat.</span><span class="es">Elige tu asiento.</span></h3>
+          <p><span class="en">Tap an open seat on the cabin map. Grey seats are taken; your choice highlights in coral.</span><span class="es">Toca un asiento libre en el mapa de cabina. Los grises están ocupados; tu elección se resalta en coral.</span></p>
+          <div class="irl"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 4h7a3 3 0 013 3v6H7z"/><path d="M7 13v5M17 13v5"/></svg><div><span class="en">The big touchscreen makes the seat map easy to read for everyone.</span><span class="es">La pantalla grande hace que el mapa sea fácil de leer para todos.</span></div></div>
+        </div>
+        <div class="kk3d-step" data-s="5">
+          <div class="kk3d-kicker"><span class="idx">05</span><span class="of"><span class="en">Step 5 of 7</span><span class="es">Paso 5 de 7</span></span></div>
+          <h3><span class="en">Add & tag your bags.</span><span class="es">Agrega y etiqueta tus maletas.</span></h3>
+          <p><span class="en">Tell the kiosk how many bags you're checking. It prints a tag for each — loop it on the handle yourself.</span><span class="es">Indica al kiosco cuántas maletas documentas. Imprime una etiqueta para cada una — colócala tú en el asa.</span></p>
+          <div class="irl"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="7" width="14" height="13" rx="2"/><path d="M9 7V4h6v3"/></svg><div><span class="en">After tagging, drop bags at the airline's bag-drop counter.</span><span class="es">Después de etiquetar, deja las maletas en el mostrador de entrega.</span></div></div>
+        </div>
+        <div class="kk3d-step" data-s="6">
+          <div class="kk3d-kicker"><span class="idx">06</span><span class="of"><span class="en">Step 6 of 7</span><span class="es">Paso 6 de 7</span></span></div>
+          <h3><span class="en">Collect your <em>boarding pass</em>.</span><span class="es">Recoge tu <em>pase de abordar</em>.</span></h3>
+          <p><span class="en">The kiosk prints your boarding pass and bag tags. Take them from the slot below the screen.</span><span class="es">El kiosco imprime tu pase de abordar y etiquetas. Tómalos de la ranura debajo de la pantalla.</span></p>
+          <div class="irl"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V4h12v5M6 18H4a2 2 0 01-2-2v-3a2 2 0 012-2h16a2 2 0 012 2v3a2 2 0 01-2 2h-2M6 14h12v6H6z"/></svg><div><span class="en">Prefer paperless? You can also send the pass to your phone.</span><span class="es">¿Prefieres sin papel? También puedes enviar el pase a tu teléfono.</span></div></div>
+        </div>
+        <div class="kk3d-step" data-s="7">
+          <div class="kk3d-kicker"><span class="idx">07</span><span class="of"><span class="en">Step 7 of 7</span><span class="es">Paso 7 de 7</span></span></div>
+          <h3><span class="en">You're <em>checked in</em>.</span><span class="es">Estás <em>registrado</em>.</span></h3>
+          <p><span class="en">Take your boarding pass and bag tags. Drop checked bags, then head to security and your gate.</span><span class="es">Toma tu pase y etiquetas. Entrega las maletas, luego ve a seguridad y a tu puerta.</span></p>
+          <div class="irl"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg><div><span class="en">Keep your boarding pass handy — you'll show it at security and boarding.</span><span class="es">Ten tu pase a mano — lo mostrarás en seguridad y al abordar.</span></div></div>
+        </div>
+      </div>
+
+      <div class="kk3d-hint" id="kkHint"><span class="m"></span><span class="en">Scroll to walk through</span><span class="es">Desplázate para avanzar</span></div>
+
+      <div class="kk3d-controls">
+        <div class="kk3d-nav"><button id="kkPrev" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button></div>
+        <div class="kk3d-prog" id="kkProg"></div>
+        <div class="kk3d-count" id="kkCount"><b>01</b> / 07</div>
+        <div class="kk3d-nav"><button id="kkNext" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button></div>
+      </div>
+
+      <div class="kk3d-load" id="kkLoad"><div class="ring"></div><div class="lbl"><span class="en">Preparing the kiosk</span><span class="es">Preparando el kiosco</span></div></div>
+    </div>
+  </div>
+</div>
+
+  <div id="ksHost" style="position:absolute;left:-9999px;top:0">
+  <div class="ks" id="ksScreen">
+
+    <!-- 1 WELCOME -->
+    <div class="ks-pg ks-welcome on" data-s="1">
+      <img class="lg" src="assets/cwt-logo.png" alt="CWT Sato Travel">
+      <div class="big"><span class="en">Self <em>Check-In</em></span><span class="es">Auto <em>Check-In</em></span></div>
+      <div class="sub"><span class="en">Print your boarding pass and bag tags in minutes.</span><span class="es">Imprime tu pase de abordar y etiquetas en minutos.</span></div>
+      <div class="langs"><span class="on">English</span><span>Español</span><span>Português</span></div>
+      <div class="ks-cta ks-touchpulse"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11V6a2 2 0 014 0v5m0 0V4a2 2 0 014 0v9m-8-2a2 2 0 00-4 0v2c0 4 3 7 7 7h2a6 6 0 006-6v-3"/></svg><span class="en">Touch to start</span><span class="es">Toca para comenzar</span></div>
+    </div>
+
+    <!-- 2 IDENTIFY -->
+    <div class="ks-pg" data-s="2">
+      <div class="ks-top"><div class="brand"><img src="assets/cwt-logo.png" alt=""></div><div class="sep"></div><div class="loc"><span class="en">Terminal 2 · Departures</span><span class="es">Terminal 2 · Salidas</span></div><div class="clock">06:12</div></div>
+      <div class="ks-steps" id="kss2"></div>
+      <div class="ks-body">
+        <div class="ks-main">
+          <div class="ks-eyebrow"><span class="en">Step 1 · Identify</span><span class="es">Paso 1 · Identificar</span></div>
+          <div class="ks-h1"><span class="en">Scan your passport</span><span class="es">Escanea tu pasaporte</span></div>
+          <div class="ks-sub"><span class="en">Place the photo page flat on the scanner below the screen.</span><span class="es">Coloca la página de la foto sobre el escáner debajo de la pantalla.</span></div>
+          <div class="ks-cta navy" style="margin-top:8px"><span class="en">Enter code instead</span><span class="es">Ingresar código</span></div>
+        </div>
+        <div class="ks-side">
+          <div class="ks-scan">
+            <div class="pp"><div class="chip"></div><div class="em"></div><div class="ln a"></div><div class="ln b"></div></div>
+            <div class="beam"></div>
+            <div class="hint"><span class="en">Scanning…</span><span class="es">Escaneando…</span></div>
+            <div class="hint2"><span class="en">Hold steady</span><span class="es">Mantén firme</span></div>
           </div>
         </div>
       </div>
     </div>
-    <div class="steps">
-      <button class="step active done" onclick="setKioskStep(1)" data-kstep="1">
-        <div class="step-num">1</div>
-        <div class="step-body"><h4><span class="en">Find the kiosks</span><span class="es">Encuentra los kioscos</span></h4><p><span class="en">Near the check-in counters in your terminal (Level 200). Look for touchscreens with the airline logo.</span><span class="es">Cerca de los mostradores en tu terminal (Nivel 200). Busca pantallas con el logo de la aerolínea.</span></p></div>
-      </button>
-      <button class="step" onclick="setKioskStep(2)" data-kstep="2">
-        <div class="step-num">2</div>
-        <div class="step-body"><h4><span class="en">Identify yourself</span><span class="es">Identifícate</span></h4><p><span class="en">Scan your passport, enter your PNR, or scan the barcode from your e-ticket email.</span><span class="es">Escanea tu pasaporte, ingresa tu PNR, o escanea el código de barras del e-ticket.</span></p></div>
-      </button>
-      <button class="step" onclick="setKioskStep(3)" data-kstep="3">
-        <div class="step-num">3</div>
-        <div class="step-body"><h4><span class="en">Confirm &amp; select seat</span><span class="es">Confirma y elige asiento</span></h4><p><span class="en">Verify your flight details and choose a seat if you haven't already.</span><span class="es">Verifica los detalles del vuelo y elige asiento si no lo has hecho.</span></p></div>
-      </button>
-      <button class="step" onclick="setKioskStep(4)" data-kstep="4">
-        <div class="step-num">4</div>
-        <div class="step-body"><h4><span class="en">Print boarding pass &amp; bag tags</span><span class="es">Imprime pase y etiquetas</span></h4><p><span class="en">Take your printed boarding pass and luggage tags to the bag drop counter if checking bags.</span><span class="es">Lleva el pase impreso y etiquetas al bag drop si tienes maletas.</span></p></div>
-      </button>
-    </div>
-  </div>
 
-  <div class="callout tip reveal" style="margin-top:140px;clear:both">
+    <!-- 3 VERIFY -->
+    <div class="ks-pg" data-s="3">
+      <div class="ks-top"><div class="brand"><img src="assets/cwt-logo.png" alt=""></div><div class="sep"></div><div class="loc"><span class="en">Terminal 2 · Departures</span><span class="es">Terminal 2 · Salidas</span></div><div class="clock">06:12</div></div>
+      <div class="ks-steps" id="kss3"></div>
+      <div class="ks-body">
+        <div class="ks-main">
+          <div class="ks-eyebrow"><span class="en">Step 2 · Confirm</span><span class="es">Paso 2 · Confirmar</span></div>
+          <div class="ks-h1"><span class="en">Is this your trip?</span><span class="es">¿Es este tu viaje?</span></div>
+          <div class="ks-flightcard">
+            <div class="fl">CW 482 · <span class="en">Mon 9 Jun</span><span class="es">Lun 9 jun</span></div>
+            <div class="route">
+              <div class="ap"><div class="code">PTY</div><div class="city">Panama City</div></div>
+              <svg class="pl" viewBox="0 0 24 24" fill="currentColor"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 00-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L11 19v-5.5z"/></svg>
+              <div class="ap" style="text-align:right"><div class="code">MIA</div><div class="city">Miami</div></div>
+            </div>
+            <div class="meta"><div><div class="mk"><span class="en">Depart</span><span class="es">Sale</span></div><div class="mv">06:45</div></div><div><div class="mk"><span class="en">Arrive</span><span class="es">Llega</span></div><div class="mv">09:58</div></div><div><div class="mk"><span class="en">Class</span><span class="es">Clase</span></div><div class="mv">Economy</div></div></div>
+          </div>
+          <div class="ks-cta" style="margin-top:30px"><span class="en">Yes, continue</span><span class="es">Sí, continuar</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+        </div>
+        <div class="ks-side">
+          <div class="ks-vcard">
+            <div class="ks-vrow ok d1"><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><div><div class="k"><span class="en">Passenger</span><span class="es">Pasajero</span></div><div class="v">RIVERA, ANA M</div></div></div>
+            <div class="ks-vrow ok d2"><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><div><div class="k"><span class="en">Document</span><span class="es">Documento</span></div><div class="v">USA · ••• 4821</div></div></div>
+            <div class="ks-vrow ok d3"><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><div><div class="k"><span class="en">Expiry</span><span class="es">Vence</span></div><div class="v">12 Mar 2031</div></div></div>
+          </div>
+          <div class="ks-note"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><div class="tx"><span class="en">Tap a field if anything looks wrong — staff can help nearby.</span><span class="es">Toca un campo si algo no está bien — hay personal cerca para ayudar.</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4 SEAT -->
+    <div class="ks-pg" data-s="4">
+      <div class="ks-top"><div class="brand"><img src="assets/cwt-logo.png" alt=""></div><div class="sep"></div><div class="loc">CW 482 · PTY → MIA</div><div class="clock">06:12</div></div>
+      <div class="ks-steps" id="kss4"></div>
+      <div class="ks-body" style="padding-top:24px">
+        <div class="ks-seatwrap">
+          <div class="ks-seatside">
+            <div class="ks-eyebrow"><span class="en">Step 3 · Seat</span><span class="es">Paso 3 · Asiento</span></div>
+            <div class="ks-h1" style="font-size:42px"><span class="en">Choose<br>your seat</span><span class="es">Elige tu<br>asiento</span></div>
+            <div class="ks-legend">
+              <span><i class="av"></i><span class="en">Available</span><span class="es">Disponible</span></span>
+              <span><i class="oc"></i><span class="en">Occupied</span><span class="es">Ocupado</span></span>
+              <span><i class="se"></i><span class="en">Your seat</span><span class="es">Tu asiento</span></span>
+            </div>
+            <div class="ks-seatpick"><div class="k"><span class="en">Selected</span><span class="es">Seleccionado</span></div><div class="big">12A</div><div class="s"><span class="en">Window · Front</span><span class="es">Ventana · Delante</span></div></div>
+          </div>
+          <div class="ks-cabin">
+            <div class="nose"></div>
+            <div class="ks-collabels"><span>A</span><span>B</span><span>C</span><span></span><span>D</span><span>E</span><span>F</span></div>
+            <div class="ks-seatgrid" id="ksSeatGrid"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5 BAGS -->
+    <div class="ks-pg" data-s="5">
+      <div class="ks-top"><div class="brand"><img src="assets/cwt-logo.png" alt=""></div><div class="sep"></div><div class="loc">CW 482 · PTY → MIA</div><div class="clock">06:13</div></div>
+      <div class="ks-steps" id="kss5"></div>
+      <div class="ks-body">
+        <div class="ks-main">
+          <div class="ks-eyebrow"><span class="en">Step 4 · Bags</span><span class="es">Paso 4 · Maletas</span></div>
+          <div class="ks-h1"><span class="en">How many bags<br>to check?</span><span class="es">¿Cuántas maletas<br>documentar?</span></div>
+          <div class="ks-allow">
+            <div class="box"><div class="k"><span class="en">Carry-on</span><span class="es">Mano</span></div><div class="v">1</div></div>
+            <div class="box"><div class="k"><span class="en">Checked</span><span class="es">Doc.</span></div><div class="v">1</div></div>
+            <div class="box"><div class="k"><span class="en">Allowance</span><span class="es">Límite</span></div><div class="v">23kg</div></div>
+          </div>
+        </div>
+        <div class="ks-side">
+          <div class="ks-opt inc" style="border-color:var(--green);background:var(--green50)">
+            <div class="ic" style="background:#fff;color:var(--green)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="6" y="8" width="12" height="13" rx="2"/><path d="M9 8V5h6v3M10 12v5M14 12v5"/></svg></div>
+            <div class="tx"><div class="t"><span class="en">Carry-on</span><span class="es">Equipaje de mano</span></div><div class="s"><span class="en">Included · 8 kg</span><span class="es">Incluido · 8 kg</span></div></div>
+          </div>
+          <div class="ks-opt sel">
+            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="7" width="14" height="14" rx="2"/><path d="M9 7V4h6v3M5 12h14"/></svg></div>
+            <div class="tx"><div class="t"><span class="en">1 checked bag</span><span class="es">1 maleta documentada</span></div><div class="s"><span class="en">Up to 23 kg · prepaid</span><span class="es">Hasta 23 kg · prepagada</span></div></div>
+            <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="var(--coral)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>
+          </div>
+          <div class="ks-note"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4 2 7L12 17l-6.5 4 2-7L2 9h7z"/></svg><div class="tx"><span class="en">A printed <b>bag tag</b> comes next — loop it through your bag handle.</span><span class="es">Sigue una <b>etiqueta</b> impresa — pásala por el asa de tu maleta.</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6 PRINT -->
+    <div class="ks-pg" data-s="6">
+      <div class="ks-top"><div class="brand"><img src="assets/cwt-logo.png" alt=""></div><div class="sep"></div><div class="loc">CW 482 · PTY → MIA</div><div class="clock">06:13</div></div>
+      <div class="ks-steps" id="kss6"></div>
+      <div class="ks-body">
+        <div class="ks-print">
+          <div class="ks-main" style="flex:1">
+            <div class="ks-eyebrow"><span class="en">Step 5 · Print</span><span class="es">Paso 5 · Imprimir</span></div>
+            <div class="ks-h1"><span class="en">Printing your<br>documents…</span><span class="es">Imprimiendo tus<br>documentos…</span></div>
+            <div class="ks-sub"><span class="en">Your boarding pass and bag tag are printing. Collect them from the slot below.</span><span class="es">Tu pase y etiqueta se están imprimiendo. Recógelos de la ranura inferior.</span></div>
+          </div>
+          <div class="ks-printbay">
+            <div class="ks-pass">
+              <div class="ph"><img src="assets/cwt-logo.png" alt=""><span class="fl">CW 482</span></div>
+              <div class="gold"></div>
+              <div class="bd">
+                <div class="qr"><svg id="ksQR" viewBox="0 0 25 25"></svg></div>
+                <div class="info"><div class="rt">PTY → MIA</div><div class="nm">A. RIVERA · 12A</div><div class="sg"><b><span class="en">GATE</span><span class="es">PUERTA</span> B12</b><em><span class="en">GRP</span> 3</em></div></div>
+              </div>
+            </div>
+            <div class="ks-printer"><div class="slot"></div><div class="glow"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7 DONE -->
+    <div class="ks-pg ks-done" data-s="7">
+      <div class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></div>
+      <div class="eyebrow"><span class="en">Checked in</span><span class="es">Registrado</span></div>
+      <h2><span class="en">Take your documents</span><span class="es">Toma tus documentos</span></h2>
+      <p><span class="en">Drop your checked bag at the counter, then head to security and your gate.</span><span class="es">Entrega tu maleta en el mostrador, luego ve a seguridad y a tu puerta.</span></p>
+      <div class="grab">
+        <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V4h12v5M6 18H4a2 2 0 01-2-2v-3a2 2 0 012-2h16a2 2 0 012 2v3a2 2 0 01-2 2h-2M6 14h12v6H6z"/></svg><span class="en">Boarding pass</span><span class="es">Pase de abordar</span></span>
+        <span class="chip"><span class="k"><span class="en">Gate</span><span class="es">Puerta</span></span> B12</span>
+        <span class="chip"><span class="k"><span class="en">Seat</span><span class="es">Asiento</span></span> 12A</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+  <div class="callout tip reveal" style="margin-top:28px">
     <strong><span class="en">Kiosk not working?</span><span class="es">¿El kiosco no funciona?</span></strong>
     <span class="en"> Just go to any staffed check-in counter for your airline — they'll help you.</span>
     <span class="es"> Ve a cualquier mostrador atendido de tu aerolínea — te ayudarán.</span>
@@ -2074,11 +2208,11 @@ a{color:var(--navy-700);text-decoration:none}
   </div>
 
   <div class="gate-rule reveal">
-    <div class="gate-card t1">
+    <div class="gate-card t1" data-comment-anchor="5ff26e2e49-div">
       <div class="lead">1</div>
       <div>
         <div class="title"><span class="en">Gate starts with</span><span class="es">Puerta empieza con</span></div>
-        <div class="meta">Terminal 1 → <span style="color:var(--coral)">101</span> · <span style="color:var(--coral)">139</span></div>
+        <div class="meta">Terminal 1 → <span style="color:var(--coral)">101</span> · <span style="color:var(--coral)">147</span></div>
         <div class="sub"><span class="en">e.g. Gate 105, 122, 138</span><span class="es">ej. Puerta 105, 122, 138</span></div>
       </div>
     </div>
@@ -2086,8 +2220,8 @@ a{color:var(--navy-700);text-decoration:none}
       <div class="lead">2</div>
       <div>
         <div class="title"><span class="en">Gate starts with</span><span class="es">Puerta empieza con</span></div>
-        <div class="meta">Terminal 2 → <span style="color:var(--coral)">201</span> · <span style="color:var(--coral)">220</span></div>
-        <div class="sub"><span class="en">e.g. Gate 209, 215, 220</span><span class="es">ej. Puerta 209, 215, 220</span></div>
+        <div class="meta">Terminal 2 → <span style="color:var(--coral)">201</span> · <span style="color:var(--coral)">225</span></div>
+        <div class="sub"><span class="en">e.g. Gate 209, 215, 223</span><span class="es">ej. Puerta 209, 215, 223</span></div>
       </div>
     </div>
   </div>
@@ -2104,7 +2238,7 @@ a{color:var(--navy-700);text-decoration:none}
         <div class="term-head t1">
           <span class="t-label"><span class="en">Terminal</span><span class="es">Terminal</span> · PTY</span>
           <h3>Terminal 1</h3>
-          <span class="gates">Gates 101 – 139</span>
+          <span class="gates">Gates 101 – 147</span>
         </div>
         <div class="term-list">
           <span class="t-label"><span class="en">Airlines</span><span class="es">Aerolíneas</span></span>
@@ -2150,7 +2284,7 @@ a{color:var(--navy-700);text-decoration:none}
         <div class="term-head t2">
           <span class="t-label"><span class="en">Terminal</span><span class="es">Terminal</span> · PTY</span>
           <h3>Terminal 2</h3>
-          <span class="gates">Gates 201 – 220</span>
+          <span class="gates">Gates 201 – 225</span>
         </div>
         <div class="term-list">
           <span class="t-label"><span class="en">Airlines</span><span class="es">Aerolíneas</span></span>
@@ -2185,7 +2319,7 @@ a{color:var(--navy-700);text-decoration:none}
 
   <!-- Flow -->
   <div class="flow reveal">
-    <h4><span class="en">Departure flow at Tocumen</span><span class="es">Flujo de salida en Tocumen</span></h4>
+    <h4 data-comment-anchor="aee7c677c1-h4"><span class="en">Departure flow at Tocumen</span><span class="es">Flujo de salida en Tocumen</span></h4>
     <div class="flow-row">
       <div class="flow-step"><span class="num">1</span><span><span class="en">Arrive · L200</span><span class="es">Llegar · N200</span></span></div>
       <span class="flow-arrow">→</span>
@@ -2227,7 +2361,7 @@ a{color:var(--navy-700);text-decoration:none}
       </div>
       <div class="q-item g3">
         <div class="gnum">3</div>
-        <div><div class="gtitle">Group A</div><div class="gsub"><span class="en">Main Economy · forward rows</span><span class="es">Economy principal · filas delanteras</span></div></div>
+        <div><div class="gtitle" data-comment-anchor="65869a7494-div">Group A</div><div class="gsub"><span class="en">Main Economy · forward rows</span><span class="es">Economy principal · filas delanteras</span></div></div>
         <span class="tag">Group A</span>
       </div>
       <div class="q-item g4">
@@ -2333,18 +2467,18 @@ a{color:var(--navy-700);text-decoration:none}
   <div class="office reveal">
     <div class="office-head">
       <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="2" y="6" width="20" height="14" rx="2" stroke="currentColor" stroke-width="2"/><path d="M2 8l10 6 10-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div><span class="t-label"><span class="en">Office hours · Mon–Thu 7:30 am – 5:30 pm · Fri 8:00 am – 12:00 pm</span><span class="es">Horario · Lun–Jue 7:30 am – 5:30 pm · Vie 8:00 am – 12:00 md</span></span><h4><span class="en">CWTSatoTravel · U.S. Embassy Panama</span><span class="es">CWTSatoTravel · Embajada EE.UU. Panamá</span></h4></div>
+      <div><span class="t-label"><span class="en" data-comment-anchor="7295ddf4f1-span">Office hours · Mon–Thu 7:30 am – 5:30 pm · Fri 8:00 am – 12:00 pm</span><span class="es">Horario · Lun–Jue 7:30 am – 5:30 pm · Vie 8:00 am – 12:00 md</span></span><h4><span class="en">CWTSatoTravel · U.S. Embassy Panama</span><span class="es">CWTSatoTravel · Embajada EE.UU. Panamá</span></h4></div>
     </div>
     <div class="office-people">
       <div class="person">
         <div class="role"><span class="en">Travel counselor</span><span class="es">Asesor de viaje</span></div>
         <div class="name">Abdel Aguilar</div>
-        <a class="email" href="/cdn-cgi/l/email-protection#6809090f1d0104091a2805110b1f1c460b0705461809"><span class="__cf_email__" data-cfemail="a3c2c2c4d6cacfc2d1e3cedac0d4d78dc0ccce8dd3c2">[email&#160;protected]</span> →</a>
+        <a class="email" href="mailto:aaguilar@mycwt.com.pa">aaguilar@mycwt.com.pa →</a>
       </div>
       <div class="person">
         <div class="role"><span class="en">Travel counselor</span><span class="es">Asesor de viaje</span></div>
-        <div class="name">Félix Barrios</div>
-        <a class="email" href="/cdn-cgi/l/email-protection#6c0a0e0d1e1e05031f2c01150f1b18420f0301421c0d"><span class="__cf_email__" data-cfemail="b3d5d1d2c1c1dadcc0f3decad0c4c79dd0dcde9dc3d2">[email&#160;protected]</span> →</a>
+        <div class="name" data-comment-anchor="fb6c2799f1-div">Félix Barrios</div>
+        <a class="email" href="mailto:fbarrios@mycwt.com.pa">fbarrios@mycwt.com.pa →</a>
       </div>
     </div>
     <div class="office-grid">
@@ -2370,10 +2504,10 @@ a{color:var(--navy-700);text-decoration:none}
     </div>
     <div class="foot-col">
       <div class="lab"><span class="en">Counselors</span><span class="es">Asesores</span></div>
-      <a href="/cdn-cgi/l/email-protection#c1a0a0a6b4a8ada0b381acb8a2b6b5efa2aeacefb1a0">Abdel Aguilar</a>
-      <a href="/cdn-cgi/l/email-protection#e5848482908c898497a5889c869291cb868a88cb9584" style="font-size:11px;color:rgba(255,255,255,.5)"><span class="__cf_email__" data-cfemail="5839393f2d3134392a1835213b2f2c763b3735762839">[email&#160;protected]</span></a>
-      <a href="/cdn-cgi/l/email-protection#94f2f6f5e6e6fdfbe7d4f9edf7e3e0baf7fbf9bae4f5" style="margin-top:8px;display:block">Félix Barrios</a>
-      <a href="/cdn-cgi/l/email-protection#ddbbbfbcafafb4b2ae9db0a4beaaa9f3beb2b0f3adbc" style="font-size:11px;color:rgba(255,255,255,.5)"><span class="__cf_email__" data-cfemail="82e4e0e3f0f0ebedf1c2effbe1f5f6ace1edefacf2e3">[email&#160;protected]</span></a>
+      <a href="mailto:aaguilar@mycwt.com.pa">Abdel Aguilar</a>
+      <a href="mailto:aaguilar@mycwt.com.pa" style="font-size:11px;color:rgba(255,255,255,.5)">aaguilar@mycwt.com.pa</a>
+      <a href="mailto:fbarrios@mycwt.com.pa" style="margin-top:8px;display:block">Félix Barrios</a>
+      <a href="mailto:fbarrios@mycwt.com.pa" style="font-size:11px;color:rgba(255,255,255,.5)">fbarrios@mycwt.com.pa</a>
     </div>
     <div class="foot-col">
       <div class="lab"><span class="en">Emergency · 24/7</span><span class="es">Emergencia · 24/7</span></div>
@@ -2419,7 +2553,7 @@ a{color:var(--navy-700);text-decoration:none}
   </div>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 /* ============ LANG ============ */
 function setLang(l){
   document.documentElement.dataset.lang = l;
@@ -2722,6 +2856,68 @@ prevBtn.onclick = ()=> api.go(Math.max(1, api.current()-1));
 nextBtn.onclick = ()=> api.go(Math.min(N, api.current()+1));
 dots.forEach((d,i)=> d.onclick = ()=> api.go(i+1));
 addEventListener('scroll', ()=>{ hint && hint.classList.add('gone'); }, { once:true, passive:true });
+</script>
+\n
+<!-- Section 05 · 3D Self Check-In Kiosk engine -->
+<script type="module">
+import { initKiosk3D } from './assets/kiosk3d.js';
+
+const N = 7;
+const stepNames = { en:['Identify','Confirm','Seat','Bags','Print'], es:['Identificar','Confirmar','Asiento','Maletas','Imprimir'] };
+function buildStrip(elId, cur){
+  const el = document.getElementById(elId); if(!el) return;
+  for(let i=0;i<5;i++){
+    const st = document.createElement('div'); st.className='st'+(i+1<cur?' done':i+1===cur?' cur':'');
+    const bar=document.createElement('div'); bar.className='bar';
+    const lb=document.createElement('div'); lb.className='lb';
+    lb.innerHTML='<span class="en">'+stepNames.en[i]+'</span><span class="es">'+stepNames.es[i]+'</span>';
+    st.appendChild(bar); st.appendChild(lb); el.appendChild(st);
+  }
+}
+buildStrip('kss2',1); buildStrip('kss3',2); buildStrip('kss4',3); buildStrip('kss5',4); buildStrip('kss6',5);
+
+(function(){
+  const grid=document.getElementById('ksSeatGrid'); if(!grid) return;
+  const rows=[{n:11,occ:['B','E']},{n:12,sel:'A',occ:['C']},{n:13,occ:['D','E','F']},{n:14,occ:['B']},{n:15,occ:['A','F']}];
+  const cols=['A','B','C','_','D','E','F'];
+  rows.forEach(r=>{ const row=document.createElement('div'); row.className='ks-seatrow';
+    cols.forEach(c=>{ if(c==='_'){ const rn=document.createElement('div'); rn.className='rn'; rn.textContent=r.n; row.appendChild(rn); return; }
+      const s=document.createElement('div'); s.className='ks-seat'; s.textContent=c;
+      if(r.sel===c) s.classList.add('sel'); else if(r.occ&&r.occ.includes(c)) s.classList.add('occ');
+      row.appendChild(s); });
+    grid.appendChild(row); });
+})();
+
+function makeQR(svg){ if(!svg) return; const N=25, ns='http://www.w3.org/2000/svg'; let seed=20250609; const rnd=()=>{ seed=(seed*1103515245+12345)&0x7fffffff; return seed/0x7fffffff; };
+  function rect(x,y){ const r=document.createElementNS(ns,'rect'); r.setAttribute('x',x); r.setAttribute('y',y); r.setAttribute('width',1); r.setAttribute('height',1); r.setAttribute('fill','#0C2D63'); svg.appendChild(r); }
+  const finder=(x,y)=>{ for(let i=0;i<7;i++)for(let j=0;j<7;j++){ const edge=i===0||i===6||j===0||j===6, core=i>=2&&i<=4&&j>=2&&j<=4; if(edge||core) rect(x+i,y+j); } };
+  for(let x=0;x<N;x++)for(let y=0;y<N;y++){ const inF=(x<8&&y<8)||(x>N-9&&y<8)||(x<8&&y>N-9); if(inF) continue; if(rnd()>0.55) rect(x,y); }
+  finder(0,0); finder(N-7,0); finder(0,N-7); }
+makeQR(document.getElementById('ksQR'));
+
+const pages=[...document.querySelectorAll('#ksScreen .ks-pg')];
+const caps=[...document.querySelectorAll('#kkCopy .kk3d-step')];
+const dotsWrap=document.getElementById('kkProg');
+const count=document.getElementById('kkCount');
+const prevBtn=document.getElementById('kkPrev');
+const nextBtn=document.getElementById('kkNext');
+const hint=document.getElementById('kkHint');
+for(let i=1;i<=N;i++){ const d=document.createElement('i'); d.dataset.s=i; dotsWrap.appendChild(d); }
+const dots=[...dotsWrap.children];
+
+function onStep(n){
+  pages.forEach(p=>p.classList.toggle('on', +p.dataset.s===n));
+  caps.forEach(c=>c.classList.toggle('on', +c.dataset.s===n));
+  dots.forEach((d,i)=>{ d.classList.toggle('on', i+1===n); d.classList.toggle('done', i+1<n); });
+  count.innerHTML='<b>'+String(n).padStart(2,'0')+'</b> / 0'+N;
+  prevBtn.disabled=n<=1; nextBtn.disabled=n>=N;
+}
+
+const api=initKiosk3D({ model:'assets/kiosk.glb', steps:N, onStep });
+prevBtn.onclick=()=>api.go(Math.max(1,api.current()-1));
+nextBtn.onclick=()=>api.go(Math.min(N,api.current()+1));
+dots.forEach((d,i)=>d.onclick=()=>api.go(i+1));
+addEventListener('scroll',()=>{ hint&&hint.classList.add('gone'); },{once:true,passive:true});
 </script>
 \n</body>
 </html>
