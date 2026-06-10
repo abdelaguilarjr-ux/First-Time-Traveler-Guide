@@ -1,0 +1,124 @@
+/* ============================================================
+   CWT Sato Travel — Section 04 · Online Check-In (3D)
+   Scoped module styles. Brand tokens mirror the guide.
+   ============================================================ */
+.ci3d{
+  --nav:var(--nav-h,64px);
+  --navy-900:#071F45; --navy-800:#0C2D63; --navy-700:#0F3C78; --navy-600:#1550A0;
+  --navy-50:#EEF3FA; --navy-100:#DCE7F5;
+  --coral:#FF694B; --coral-600:#F25435; --coral-50:#FFF1EE;
+  --ink:#0C2D63; --ink-2:#3D4A5C; --ink-3:#5A6878; --ink-4:#7A8899;
+  --paper:#FBFAF6; --line:rgba(12,45,99,.12); --line-2:rgba(12,45,99,.07);
+  --ease:cubic-bezier(.22,1,.36,1);
+  position:relative;
+  width:100%;
+  margin:6px 0 0;
+}
+/* the scroll-length driver — ~110vh per step gives calm pacing */
+.ci3d-track{ position:relative; height:780vh; }
+
+/* sticky cinematic stage — a contained, rounded panel within the content column */
+.ci3d-stage{
+  position:sticky; top:calc(var(--nav) + 12px);
+  height:calc(100vh - var(--nav) - 30px); min-height:560px;
+  overflow:hidden; border-radius:26px;
+  box-shadow:0 30px 70px -34px rgba(7,31,69,.5), 0 0 0 1px rgba(12,45,99,.06);
+  background:
+    radial-gradient(120% 80% at 78% -10%, #EAF1FB 0%, transparent 55%),
+    radial-gradient(90% 70% at 8% 108%, rgba(255,105,75,.10) 0%, transparent 60%),
+    radial-gradient(80% 70% at 100% 100%, #E9F0FA 0%, transparent 55%),
+    linear-gradient(180deg,#F8FAFD 0%, #EEF3F9 100%);
+}
+.ci3d-stage::after{ /* faint grain */
+  content:""; position:absolute; inset:0; pointer-events:none; opacity:.025; mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.ci3d-gl, .ci3d-css{ position:absolute; inset:0; }
+.ci3d-gl canvas{ display:block; }
+.ci3d-css{ pointer-events:none; }
+.ci3d-css > div{ pointer-events:none; }
+
+/* loading veil */
+.ci3d-load{
+  position:absolute; inset:0; z-index:30; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:18px;
+  background:linear-gradient(180deg,#F8FAFD,#EEF3F9); transition:opacity .7s var(--ease); color:var(--ink-3);
+}
+.ci3d-load.gone{ opacity:0; pointer-events:none; }
+.ci3d-load .ring{ width:34px; height:34px; border-radius:50%; border:2.5px solid var(--navy-100); border-top-color:var(--coral); animation:ci3dSpin .9s linear infinite; }
+@keyframes ci3dSpin{ to{ transform:rotate(360deg); } }
+.ci3d-load .lbl{ font-size:12px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; }
+
+/* ---- editorial caption (left) ---- */
+.ci3d-copy{
+  position:absolute; left:clamp(20px,5vw,76px); top:50%; transform:translateY(-50%);
+  width:min(38vw,440px); z-index:12; pointer-events:none;
+}
+.ci3d-step{ position:absolute; inset:0; opacity:0; transform:translateY(14px); transition:opacity .6s var(--ease), transform .6s var(--ease); pointer-events:none; }
+.ci3d-step.on{ opacity:1; transform:none; position:relative; pointer-events:auto; }
+.ci3d-kicker{ display:inline-flex; align-items:center; gap:10px; margin-bottom:18px; }
+.ci3d-kicker .idx{
+  font-size:12px; font-weight:800; letter-spacing:.04em; color:#fff; background:var(--coral);
+  width:34px; height:34px; border-radius:50%; display:grid; place-items:center; box-shadow:0 8px 20px -8px rgba(255,105,75,.7);
+}
+.ci3d-kicker .of{ font-size:11px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--ink-4); }
+.ci3d-copy h3{
+  font-family:'Source Sans 3',sans-serif; font-weight:800; color:var(--navy-900);
+  font-size:clamp(26px,3vw,40px); line-height:1.04; letter-spacing:-.022em; margin:0 0 16px; text-wrap:balance;
+}
+.ci3d-copy h3 em{ font-style:normal; color:var(--coral); }
+.ci3d-copy p{ font-size:clamp(15px,1.3vw,17.5px); line-height:1.6; color:var(--ink-2); max-width:34ch; text-wrap:pretty; margin:0 0 18px; }
+.ci3d-copy .irl{
+  display:inline-flex; gap:10px; align-items:flex-start; padding:12px 16px; border-radius:13px;
+  background:rgba(255,255,255,.7); border:1px solid var(--line-2); backdrop-filter:blur(8px);
+  font-size:13px; line-height:1.45; color:var(--ink-2); max-width:36ch;
+}
+.ci3d-copy .irl b{ color:var(--navy-800); }
+.ci3d-copy .irl .ic{ flex:0 0 auto; width:20px; height:20px; color:var(--coral); margin-top:1px; }
+
+/* ---- bottom control bar ---- */
+.ci3d-controls{
+  position:absolute; left:50%; bottom:clamp(18px,3vh,30px); transform:translateX(-50%); z-index:18;
+  display:flex; align-items:center; gap:14px; pointer-events:auto;
+  padding:8px 8px 8px 18px; border-radius:100px;
+  background:rgba(255,255,255,.78); border:1px solid var(--line-2);
+  backdrop-filter:blur(18px) saturate(160%); -webkit-backdrop-filter:blur(18px) saturate(160%);
+  box-shadow:0 18px 44px -22px rgba(12,45,99,.5);
+}
+.ci3d-prog{ display:flex; align-items:center; gap:7px; }
+.ci3d-prog i{ width:9px; height:9px; border-radius:50%; background:var(--navy-100); transition:all .4s var(--ease); cursor:pointer; }
+.ci3d-prog i.done{ background:var(--navy-600); }
+.ci3d-prog i.on{ background:var(--coral); width:26px; border-radius:6px; }
+.ci3d-nav{ display:flex; gap:8px; }
+.ci3d-nav button{
+  width:42px; height:42px; border-radius:50%; display:grid; place-items:center;
+  background:#fff; border:1px solid var(--line); color:var(--navy-800);
+  transition:all .2s var(--ease); box-shadow:0 4px 12px -6px rgba(12,45,99,.4);
+}
+.ci3d-nav button:hover{ background:var(--navy-800); color:#fff; border-color:var(--navy-800); transform:translateY(-1px); }
+.ci3d-nav button:disabled{ opacity:.32; cursor:default; transform:none; background:#fff; color:var(--navy-800); }
+.ci3d-nav button svg{ width:18px; height:18px; }
+.ci3d-count{ font-size:13px; font-weight:800; color:var(--navy-800); letter-spacing:.02em; font-variant-numeric:tabular-nums; padding-right:2px; min-width:46px; text-align:center; }
+.ci3d-count b{ color:var(--coral); }
+
+/* scroll hint */
+.ci3d-hint{
+  position:absolute; left:50%; bottom:clamp(80px,11vh,108px); transform:translateX(-50%); z-index:14;
+  display:flex; align-items:center; gap:9px; color:var(--ink-3); font-size:12.5px; font-weight:700; letter-spacing:.02em;
+  transition:opacity .5s; pointer-events:none;
+}
+.ci3d-hint.gone{ opacity:0; }
+.ci3d-hint .m{ width:18px; height:28px; border:2px solid var(--ink-4); border-radius:10px; position:relative; }
+.ci3d-hint .m::after{ content:""; position:absolute; left:50%; top:5px; width:3px; height:6px; border-radius:2px; background:var(--coral); transform:translateX(-50%); animation:ci3dWheel 1.6s var(--ease) infinite; }
+@keyframes ci3dWheel{ 0%{opacity:0;transform:translate(-50%,0)} 30%{opacity:1} 70%{opacity:1} 100%{opacity:0;transform:translate(-50%,9px)} }
+
+/* tablet / mobile */
+@media (max-width:920px){
+  .ci3d-copy{ left:0; right:0; top:auto; bottom:120px; transform:none; width:auto; padding:0 22px; text-align:center; }
+  .ci3d-copy p{ margin-left:auto; margin-right:auto; }
+  .ci3d-copy .irl{ display:none; }
+  .ci3d-kicker{ justify-content:center; }
+  .ci3d-copy h3{ font-size:clamp(22px,6vw,30px); }
+}
+@media (prefers-reduced-motion:reduce){
+  .ci3d-hint .m::after{ animation:none; }
+}
