@@ -1076,6 +1076,96 @@ a{color:var(--navy-700);text-decoration:none}
   .reveal{opacity:1;transform:none}
 }
 
+/* ============ TOPNAV HORIZONTAL LINKS ============ */
+.topnav-links{display:flex;align-items:center;gap:2px;flex:1;justify-content:center;min-width:0;margin:0 10px}
+.topnav-links a{display:flex;align-items:center;gap:7px;padding:7px 11px;border-radius:9px;color:rgba(255,255,255,.66);font-size:12px;font-weight:700;letter-spacing:.02em;white-space:nowrap;transition:all 180ms var(--ease)}
+.topnav-links a .n{font-size:9.5px;font-weight:800;color:var(--coral);letter-spacing:.06em;font-variant-numeric:tabular-nums}
+.topnav-links a:hover{color:#fff;background:rgba(255,255,255,.09)}
+.topnav-links a.current{color:#fff;background:rgba(255,105,75,.18);box-shadow:inset 0 0 0 1px rgba(255,105,75,.4)}
+@media(min-width:900px){.hamburger{display:none}}
+@media(max-width:899px){.topnav-links{display:none}}
+@media(max-width:1279px) and (min-width:900px){.topnav-links a .lbl{display:none}.topnav-links a{padding:7px 9px}}
+
+/* ============ HERO EXTRAS ============ */
+.hero-path{position:absolute;inset:0;pointer-events:none;opacity:.4;z-index:0}
+.hero-path path{stroke-dasharray:5 11;animation:heroDash 70s linear infinite}
+@keyframes heroDash{to{stroke-dashoffset:-1600}}
+@media (prefers-reduced-motion:reduce){.hero-path path{animation:none}}
+.hero-tools{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.hero-tool{display:inline-flex;align-items:center;gap:8px;padding:9px 15px;border-radius:999px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);color:#fff;font-size:12.5px;font-weight:700;transition:all 180ms var(--ease)}
+.hero-tool:hover{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.34);transform:translateY(-1px)}
+.hero-tool svg{width:14px;height:14px;color:var(--coral);flex-shrink:0}
+
+/* ============ CHECKLIST EXPORT ============ */
+.cl-actions{display:flex;flex-direction:column;gap:8px;margin-top:16px}
+.cl-actions button{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--grey-300);background:#fff;color:var(--navy-800);font-size:12.5px;font-weight:700;cursor:pointer;transition:all 180ms var(--ease)}
+.cl-actions button:hover{border-color:var(--coral);color:var(--coral);transform:translateY(-1px);box-shadow:var(--shadow-sm)}
+.cl-actions button svg{width:14px;height:14px;flex-shrink:0}
+
+/* ============ CABIN-ONLY STATUS (lithium etc.) ============ */
+.pi.cabin{background:linear-gradient(180deg,#EDF5FD,#DAECFB);color:var(--navy-800);border-color:#B8D6F5}
+.pi.cabin .stat{background:rgba(15,60,120,.12);color:var(--navy-700)}
+.pi.cabin .ico-tile{background:#F3F8FE;box-shadow:inset 0 0 0 1px #B8D6F5, 0 4px 14px rgba(15,60,120,.08)}
+
+/* ============ GOOD-TO-KNOW NOTES (sections 04/05) ============ */
+.gtk{margin-top:22px;background:#fff;border:1px solid var(--grey-200);border-radius:18px;padding:24px clamp(18px,3vw,30px);box-shadow:var(--shadow-sm)}
+.gtk h4{display:flex;align-items:center;gap:10px;font-size:15.5px;font-weight:800;color:var(--navy-800);margin-bottom:16px}
+.gtk h4 .badge{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:8px;background:var(--warning-bg);color:var(--warning);font-size:14px;flex-shrink:0}
+.gtk ul{list-style:none;display:grid;gap:13px;margin:0;padding:0}
+.gtk li{position:relative;padding-left:32px;font-size:14px;line-height:1.6;color:var(--charcoal-600)}
+.gtk li b{color:var(--navy-800)}
+.gtk li::before{content:"!";position:absolute;left:0;top:2px;width:21px;height:21px;border-radius:7px;background:var(--warning-bg);color:var(--warning);font-weight:800;font-size:12px;display:flex;align-items:center;justify-content:center}
+.gtk li.app::before{content:"↓";background:var(--navy-50);color:var(--navy-700)}
+
+/* ============ STAGE EXTRA CONTROLS + EXPANDED MODE ============ */
+.st-extra{display:flex;gap:8px;margin-right:6px}
+.st-extra button{display:inline-flex;align-items:center;gap:7px;height:40px;padding:0 13px;border-radius:11px;border:1.5px solid rgba(12,45,99,.14);background:#fff;color:var(--navy-800);font-weight:800;font-size:12px;cursor:pointer;transition:all 160ms var(--ease)}
+.st-extra button:hover{background:var(--navy-800);color:#fff;border-color:var(--navy-800)}
+.st-extra button.on{background:var(--coral);border-color:var(--coral);color:#fff}
+.st-extra svg{width:15px;height:15px;flex-shrink:0}
+@media(max-width:560px){.st-extra button .lbl{display:none}.st-extra button{padding:0 11px}}
+body.stage-lock{overflow:hidden}
+.x3d-expanded .ci3d-stage,.x3d-expanded .kk3d-stage{position:fixed!important;inset:0!important;top:0!important;height:100vh!important;min-height:100vh!important;border-radius:0!important;z-index:300!important}
+.x3d-expanded .ci3d-hint,.x3d-expanded .kk3d-hint{display:none!important}
+.x3d-click-hint{position:absolute;top:16px;left:50%;transform:translateX(-50%);z-index:40;background:rgba(7,31,69,.86);color:#fff;font-size:12px;font-weight:700;padding:8px 16px;border-radius:999px;display:none;align-items:center;gap:8px;white-space:nowrap;max-width:92%;overflow:hidden;text-overflow:ellipsis}
+.x3d-expanded .x3d-click-hint{display:flex}
+
+/* ============ ROUTE FINDER (section 06) ============ */
+.rf{background:linear-gradient(180deg,#fff,#F8FAFD);border:1px solid var(--grey-200);border-radius:20px;padding:clamp(20px,3vw,32px);margin:8px 0 30px;box-shadow:var(--shadow-md);scroll-margin-top:90px}
+.rf-head{margin-bottom:18px}
+.rf-head h3{font-size:clamp(19px,2.4vw,24px);font-weight:800;color:var(--navy-800);letter-spacing:-.01em;margin:6px 0 8px}
+.rf-head p{font-size:14px;color:var(--charcoal-500);max-width:640px}
+.rf-tabs{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+.rf-tabs button{padding:10px 18px;border-radius:999px;border:1.5px solid var(--grey-300);background:#fff;font-weight:700;font-size:13px;color:var(--charcoal-600);cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:all 180ms var(--ease)}
+.rf-tabs button.active{background:var(--navy-800);border-color:var(--navy-800);color:#fff}
+.rf-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:16px;margin-bottom:18px}
+.rf-field label{display:block;font-size:10.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--charcoal-500);margin-bottom:7px}
+.rf-field select,.rf-field input{width:100%;padding:11px 12px;border:1.5px solid var(--grey-300);border-radius:11px;background:#fff;font-size:14px;font-weight:600;color:var(--navy-800);outline:none;transition:border-color 150ms;appearance:auto}
+.rf-field select:focus,.rf-field input:focus{border-color:var(--coral)}
+.rf-seg{display:flex;border:1.5px solid var(--grey-300);border-radius:11px;overflow:hidden;background:#fff}
+.rf-seg button{flex:1;padding:11px 8px;background:transparent;border:0;font-size:12.5px;font-weight:700;color:var(--charcoal-500);cursor:pointer;transition:all 150ms}
+.rf-seg button.on{background:var(--navy-800);color:#fff}
+.rf-go{display:inline-flex;align-items:center;gap:10px;background:var(--coral);color:#fff;border:0;padding:13px 26px;border-radius:12px;font-size:14px;font-weight:800;cursor:pointer;box-shadow:0 10px 24px rgba(255,105,75,.35);transition:all 180ms var(--ease)}
+.rf-go:hover{background:var(--coral-600);transform:translateY(-1px)}
+.rf-out{margin-top:22px;display:none}
+.rf-out.show{display:block;animation:fadein 280ms var(--ease)}
+.rf-verdict{display:flex;gap:14px;align-items:flex-start;background:var(--navy-800);color:#fff;border-radius:14px;padding:18px 20px;margin-bottom:16px}
+.rf-verdict .ico{flex-shrink:0;width:40px;height:40px;border-radius:11px;background:var(--coral);display:flex;align-items:center;justify-content:center;font-size:18px}
+.rf-verdict .t-big{font-size:16.5px;font-weight:800;line-height:1.35}
+.rf-verdict .t-sub{font-size:13px;color:var(--navy-200);margin-top:5px;line-height:1.55}
+.rf-out .flow-row{margin-bottom:14px}
+.rf-notes{display:grid;gap:8px;font-size:13px;color:var(--charcoal-600);line-height:1.55}
+.rf-notes div{position:relative;padding-left:24px}
+.rf-notes div::before{content:"·";position:absolute;left:8px;top:0;color:var(--coral);font-weight:800}
+
+/* ============ FULL AIRPORT MAP ============ */
+.fullmap{margin:0 0 30px;background:#fff;border:1px solid var(--grey-200);border-radius:18px;overflow:hidden;box-shadow:var(--shadow-sm)}
+.fullmap .head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;padding:18px 22px 14px;flex-wrap:wrap}
+.fullmap .head h3{font-size:18px;font-weight:800;color:var(--navy-800);letter-spacing:-.005em;margin-top:4px}
+.fullmap figure{margin:0;position:relative;cursor:zoom-in;border-top:1px solid var(--grey-200)}
+.fullmap img{width:100%;display:block}
+.fullmap .hintz{position:absolute;right:12px;bottom:12px;background:rgba(7,31,69,.85);color:#fff;font-size:11px;font-weight:700;padding:6px 12px;border-radius:999px;display:flex;gap:6px;align-items:center;pointer-events:none}
+
 </style>
 </head>
 <body>
@@ -1088,6 +1178,16 @@ a{color:var(--navy-700);text-decoration:none}
   <div class="topnav-meta" style="display:none">
     <span class="dot"></span>
     <span><span class="en">Travel Manual · v2026</span><span class="es">Manual del Viajero · v2026</span></span>
+  </div>
+  <div class="topnav-links" aria-label="Sections">
+    <a href="#before" data-target="before"><span class="n">01</span><span class="lbl"><span class="en">Prep</span><span class="es">Preparación</span></span></a>
+    <a href="#baggage" data-target="baggage"><span class="n">02</span><span class="lbl"><span class="en">Baggage</span><span class="es">Equipaje</span></span></a>
+    <a href="#requirements" data-target="requirements"><span class="n">03</span><span class="lbl"><span class="en">Docs</span><span class="es">Requisitos</span></span></a>
+    <a href="#checkin" data-target="checkin"><span class="n">04</span><span class="lbl">Check-In</span></a>
+    <a href="#kiosk" data-target="kiosk"><span class="n">05</span><span class="lbl"><span class="en">Kiosk</span><span class="es">Kiosco</span></span></a>
+    <a href="#tocumen" data-target="tocumen"><span class="n">06</span><span class="lbl">Tocumen</span></a>
+    <a href="#boarding" data-target="boarding"><span class="n">07</span><span class="lbl"><span class="en">Boarding</span><span class="es">Embarque</span></span></a>
+    <a href="#disruptions" data-target="disruptions"><span class="n">08</span><span class="lbl">SOS</span></a>
   </div>
   <div class="topnav-right">
     <div class="lang-toggle" role="tablist" aria-label="Language">
@@ -1133,6 +1233,12 @@ a{color:var(--navy-700);text-decoration:none}
 
 <!-- ============ HERO ============ -->
 <header class="hero">
+  <svg class="hero-path" viewBox="0 0 1400 700" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <path d="M-60 560 Q 320 180 700 320 T 1460 140" stroke="rgba(255,255,255,.20)" stroke-width="1.6" fill="none"/>
+    <path d="M-60 660 Q 420 420 860 480 T 1460 300" stroke="rgba(255,105,75,.32)" stroke-width="1.6" fill="none"/>
+    <circle cx="700" cy="320" r="3.5" fill="#FF694B" opacity=".7"/>
+    <circle cx="860" cy="480" r="3" fill="#fff" opacity=".4"/>
+  </svg>
   <div class="hero-grid">
     <div class="hero-left reveal">
       <div class="hero-eyebrow">
@@ -1156,6 +1262,20 @@ a{color:var(--navy-700);text-decoration:none}
         <a href="#disruptions" class="btn-ghost">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           <span class="en">Emergency contacts</span><span class="es">Emergencia</span>
+        </a>
+      </div>
+      <div class="hero-tools">
+        <a class="hero-tool" href="#before">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+          <span class="en">Packing checklist</span><span class="es">Checklist de viaje</span>
+        </a>
+        <a class="hero-tool" href="#route-finder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+          <span class="en">Which terminal? · Route to your gate</span><span class="es">¿Qué terminal? · Ruta a tu puerta</span>
+        </a>
+        <a class="hero-tool" href="#tocumen">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M1 6v15l7-3 8 3 7-3V3l-7 3-8-3z"/><path d="M8 3v15M16 6v15"/></svg>
+          <span class="en">PTY maps</span><span class="es">Mapas de PTY</span>
         </a>
       </div>
     </div>
@@ -1245,6 +1365,16 @@ a{color:var(--navy-700);text-decoration:none}
         <div class="num"><b id="ringNum">0/10</b><span><span class="en">Complete</span><span class="es">Completo</span></span></div>
       </div>
       <div class="status" id="ringStatus"><span class="en">Tap items to check them off</span><span class="es">Toca para marcar</span></div>
+      <div class="cl-actions">
+        <button type="button" onclick="exportChecklist('print')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2M6 14h12v8H6z"/></svg>
+          <span class="en">Print · Save as PDF</span><span class="es">Imprimir · Guardar PDF</span>
+        </button>
+        <button type="button" onclick="exportChecklist('txt')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+          <span class="en">Download list (.txt)</span><span class="es">Descargar lista (.txt)</span>
+        </button>
+      </div>
     </div>
     <div class="cl-list" id="checklist">
       <button class="cl-item" data-cl><div class="cl-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6L9 17l-5-5" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="cl-label"><span class="en">Valid passport (at least 6 months validity)</span><span class="es">Pasaporte válido (al menos 6 meses de vigencia)</span></span><span class="cl-tag essential"><span class="en">Essential</span><span class="es">Esencial</span></span></button>
@@ -1282,14 +1412,22 @@ a{color:var(--navy-700);text-decoration:none}
     <button class="bag-card active" data-bag onclick="toggleBag(this)" aria-pressed="true">
       <div class="bag-illu">
         <svg width="100" height="120" viewBox="0 0 100 120" fill="none">
-          <path d="M40 8h20a4 4 0 014 4v6h-28v-6a4 4 0 014-4z" stroke="#0F3C78" stroke-width="2" fill="#EDF5FD"/>
-          <rect x="12" y="22" width="76" height="86" rx="8" fill="#1550A0" stroke="#0F3C78" stroke-width="2"/>
-          <rect x="20" y="34" width="60" height="62" rx="4" fill="#0F3C78" opacity=".25"/>
-          <line x1="20" y1="58" x2="80" y2="58" stroke="#7EB0E8" stroke-width="2" opacity=".6"/>
-          <rect x="44" y="44" width="12" height="4" rx="1" fill="#FF694B"/>
-          <rect x="14" y="98" width="72" height="8" rx="2" fill="#071F45"/>
-          <circle cx="22" cy="110" r="5" fill="#1E2830" stroke="#071F45" stroke-width="1.5"/>
-          <circle cx="78" cy="110" r="5" fill="#1E2830" stroke="#071F45" stroke-width="1.5"/>
+          <defs><linearGradient id="bgCk" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1A65BF"/><stop offset="1" stop-color="#0F3C78"/></linearGradient></defs>
+          <path d="M38 16V8a4 4 0 014-4h16a4 4 0 014 4v8" stroke="#0C2D63" stroke-width="3" stroke-linecap="round"/>
+          <line x1="43" y1="16" x2="43" y2="7" stroke="#7EB0E8" stroke-width="2" opacity=".55"/>
+          <line x1="57" y1="16" x2="57" y2="7" stroke="#7EB0E8" stroke-width="2" opacity=".55"/>
+          <rect x="12" y="16" width="76" height="90" rx="12" fill="url(#bgCk)" stroke="#0C2D63" stroke-width="2.5"/>
+          <line x1="27" y1="23" x2="27" y2="99" stroke="#fff" stroke-width="2" opacity=".16"/>
+          <line x1="39" y1="23" x2="39" y2="99" stroke="#fff" stroke-width="2" opacity=".16"/>
+          <line x1="51" y1="23" x2="51" y2="99" stroke="#fff" stroke-width="2" opacity=".16"/>
+          <line x1="63" y1="23" x2="63" y2="99" stroke="#fff" stroke-width="2" opacity=".16"/>
+          <line x1="75" y1="23" x2="75" y2="99" stroke="#fff" stroke-width="2" opacity=".16"/>
+          <rect x="12" y="55" width="76" height="7" fill="#FF694B"/>
+          <rect x="70" y="24" width="22" height="14" rx="3" transform="rotate(12 81 31)" fill="#F5A623" stroke="#0C2D63" stroke-width="2"/>
+          <circle cx="26" cy="111" r="6.5" fill="#1E2830" stroke="#0C2D63" stroke-width="2"/>
+          <circle cx="74" cy="111" r="6.5" fill="#1E2830" stroke="#0C2D63" stroke-width="2"/>
+          <circle cx="26" cy="111" r="2" fill="#7A8899"/>
+          <circle cx="74" cy="111" r="2" fill="#7A8899"/>
         </svg>
       </div>
       <h4><span class="en">Checked Bag</span><span class="es">Equipaje de Bodega</span></h4>
@@ -1300,14 +1438,17 @@ a{color:var(--navy-700);text-decoration:none}
     <button class="bag-card" data-bag onclick="toggleBag(this)" aria-pressed="false">
       <div class="bag-illu">
         <svg width="86" height="120" viewBox="0 0 86 120" fill="none">
-          <path d="M36 4h14a3 3 0 013 3v8H33V7a3 3 0 013-3z" stroke="#0F3C78" stroke-width="2" fill="#EDF5FD"/>
-          <rect x="10" y="18" width="66" height="84" rx="6" fill="#1550A0" stroke="#0F3C78" stroke-width="2"/>
-          <line x1="14" y1="40" x2="72" y2="40" stroke="#7EB0E8" stroke-width="2" opacity=".5"/>
-          <rect x="34" y="28" width="18" height="4" rx="1" fill="#FF694B"/>
-          <line x1="14" y1="68" x2="72" y2="68" stroke="#7EB0E8" stroke-width="2" opacity=".4"/>
-          <rect x="12" y="94" width="62" height="8" rx="2" fill="#071F45"/>
-          <circle cx="22" cy="108" r="5" fill="#1E2830" stroke="#071F45" stroke-width="1.5"/>
-          <circle cx="64" cy="108" r="5" fill="#1E2830" stroke="#071F45" stroke-width="1.5"/>
+          <defs><linearGradient id="bgCo" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF8A6F"/><stop offset="1" stop-color="#F25435"/></linearGradient></defs>
+          <path d="M30 22V12a4 4 0 014-4h18a4 4 0 014 4v10" stroke="#0C2D63" stroke-width="3" stroke-linecap="round"/>
+          <rect x="10" y="22" width="66" height="82" rx="11" fill="url(#bgCo)" stroke="#0C2D63" stroke-width="2.5"/>
+          <path d="M10 42h66" stroke="#fff" stroke-width="2" opacity=".45"/>
+          <circle cx="58" cy="42" r="3" fill="#0C2D63"/>
+          <rect x="20" y="56" width="46" height="38" rx="8" fill="#fff" opacity=".22"/>
+          <path d="M20 66h46" stroke="#0C2D63" stroke-width="2" opacity=".3"/>
+          <circle cx="24" cy="109" r="6" fill="#1E2830" stroke="#0C2D63" stroke-width="2"/>
+          <circle cx="62" cy="109" r="6" fill="#1E2830" stroke="#0C2D63" stroke-width="2"/>
+          <circle cx="24" cy="109" r="1.8" fill="#7A8899"/>
+          <circle cx="62" cy="109" r="1.8" fill="#7A8899"/>
         </svg>
       </div>
       <h4><span class="en">Carry-On</span><span class="es">Equipaje de Mano</span></h4>
@@ -1318,11 +1459,16 @@ a{color:var(--navy-700);text-decoration:none}
     <button class="bag-card" data-bag onclick="toggleBag(this)" aria-pressed="false">
       <div class="bag-illu">
         <svg width="92" height="120" viewBox="0 0 92 120" fill="none">
-          <path d="M28 16c0-8 6-12 18-12s18 4 18 12" stroke="#0F3C78" stroke-width="2" fill="none"/>
-          <rect x="12" y="20" width="68" height="78" rx="14" fill="#1550A0" stroke="#0F3C78" stroke-width="2"/>
-          <rect x="20" y="32" width="52" height="44" rx="8" fill="#0F3C78" opacity=".22"/>
-          <circle cx="46" cy="56" r="6" stroke="#FF694B" stroke-width="2" fill="none"/>
-          <rect x="34" y="80" width="24" height="8" rx="3" fill="#7EB0E8" opacity=".6"/>
+          <defs><linearGradient id="bgPi" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F5A623"/><stop offset="1" stop-color="#D9881A"/></linearGradient></defs>
+          <path d="M34 18c0-7 5-11 12-11s12 4 12 11" stroke="#0C2D63" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <rect x="14" y="18" width="64" height="84" rx="16" fill="url(#bgPi)" stroke="#0C2D63" stroke-width="2.5"/>
+          <path d="M27 25c-6 18-6 41 0 60" stroke="#0C2D63" stroke-width="3" opacity=".3" fill="none"/>
+          <path d="M65 25c6 18 6 41 0 60" stroke="#0C2D63" stroke-width="3" opacity=".3" fill="none"/>
+          <path d="M24 42h44" stroke="#0C2D63" stroke-width="2" opacity=".3"/>
+          <rect x="36" y="29" width="20" height="6" rx="2.5" fill="#FF694B"/>
+          <rect x="28" y="62" width="36" height="30" rx="9" fill="#fff" opacity=".3"/>
+          <rect x="28" y="62" width="36" height="30" rx="9" stroke="#0C2D63" stroke-width="2" opacity=".5"/>
+          <circle cx="46" cy="62" r="3" fill="#0C2D63"/>
         </svg>
       </div>
       <h4><span class="en">Personal Item</span><span class="es">Artículo Personal</span></h4>
@@ -1443,14 +1589,14 @@ a{color:var(--navy-700);text-decoration:none}
     <div class="airlines-more">
       <h4><span class="en">Other carriers — Check their baggage policies</span><span class="es">Otras aerolíneas — Revisa sus políticas</span></h4>
       <div class="chip-row">
-        <a href="https://www.avianca.com/en/travel-information/baggage/" target="_blank" rel="noopener" class="chip"><span class="dot" style="background:#D01F2F"></span>Avianca</a>
-        <a href="https://www.iberia.com/us/luggage/" target="_blank" rel="noopener" class="chip"><span class="dot" style="background:#D7192D"></span>Iberia</a>
+        <a href="https://www.avianca.com/en/my-booking/prepare-your-trip/baggage" target="_blank" rel="noopener" class="chip"><span class="dot" style="background:#D01F2F"></span>Avianca</a>
+        <a href="https://www.iberia.com/pa/luggage/allowance-in-hold/#!/baggages-search" target="_blank" rel="noopener" class="chip"><span class="dot" style="background:#D7192D"></span>Iberia</a>
         <a href="https://www.aeromexico.com/en-us/travel-information/baggage" target="_blank" rel="noopener" class="chip"><span class="dot" style="background:#0F3D7C"></span>Aeromexico</a>
-        <a href="https://www.aireuropa.com/en/flights/baggage" target="_blank" rel="noopener" class="chip"><span class="dot" style="background:#0033A0"></span>Air Europa</a>
-        <a href="https://www.airfrance.com/US/en/common/guidevoyageur/pratique/bagages-cabine-et-soute.htm" target="_blank" rel="noopener" class="chip"><span class="dot" style="background:#002157"></span>Air France</a>
+        <a href="https://www.aireuropa.com/pa/en/aea/travel-information/baggage.html" target="_blank" rel="noopener" class="chip"><span class="dot" style="background:#0033A0"></span>Air Europa</a>
+        <a href="https://wwws.airfrance.us/information/bagages" target="_blank" rel="noopener" class="chip"><span class="dot" style="background:#002157"></span>Air France</a>
         <a href="https://www.klm.com/information/baggage" target="_blank" rel="noopener" class="chip"><span class="dot" style="background:#00A1DE"></span>KLM</a>
-        <a href="https://www.turkishairlines.com/en-us/any-questions/baggage/" target="_blank" rel="noopener" class="chip"><span class="dot" style="background:#C70A0C"></span>Turkish Airlines</a>
-        <a href="https://www.condor.com/us/flight-preparation/baggage.jsp" target="_blank" rel="noopener" class="chip"><span class="dot" style="background:#FFCC00"></span>Condor</a>
+        <a href="https://www.turkishairlines.com/en-us/any-questions/checked-baggage/" target="_blank" rel="noopener" class="chip"><span class="dot" style="background:#C70A0C"></span>Turkish Airlines</a>
+        <a href="https://www.condor.com/us/book-plan/extras/baggage-pets.jsp" target="_blank" rel="noopener" class="chip"><span class="dot" style="background:#FFCC00"></span>Condor</a>
       </div>
     </div>
   </div>
@@ -1505,49 +1651,65 @@ a{color:var(--navy-700);text-decoration:none}
         <span style="display:inline-flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:3px;background:var(--error)"></span><span class="en">Never</span><span class="es">Nunca</span></span>
         <span style="display:inline-flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:3px;background:var(--warning)"></span><span class="en">Checked only</span><span class="es">Solo bodega</span></span>
         <span style="display:inline-flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:3px;background:var(--success)"></span><span class="en">Carry-on OK</span><span class="es">Mano OK</span></span>
+        <span style="display:inline-flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:3px;background:var(--navy-600)"></span><span class="en">Cabin only</span><span class="es">Solo cabina</span></span>
       </div>
     </div>
     <div class="prohibited">
       <div class="pi never">
-        <div class="ico-tile"><svg viewBox="0 0 48 48" fill="none"><path d="M8 22h22a4 4 0 0 1 4 4v6H14l-6-6v-4z" fill="currentColor" opacity=".18"/><path d="M8 22h22a4 4 0 0 1 4 4v6H14l-6-6v-4z" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M30 22V14a2 2 0 0 1 2-2h6v10" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M14 32l-3 6h12l3-6" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><circle cx="14" cy="27" r="1.6" fill="currentColor"/></svg></div>
+        <div class="ico-tile"><svg viewBox="0 0 48 48" fill="none"><path d="M6 17h30v7a4 4 0 01-4 4h-9.5l-2.2 8a2 2 0 01-1.9 1.5H13l3-9.5h-6a4 4 0 01-4-4v-7z" fill="currentColor" opacity=".15"/><path d="M6 17h30v7a4 4 0 01-4 4h-9.5l-2.2 8a2 2 0 01-1.9 1.5H13l3-9.5h-6a4 4 0 01-4-4v-7z" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><path d="M36 17v-4h6v9h-4" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><circle cx="12" cy="22.5" r="1.7" fill="currentColor"/></svg></div>
         <span><span class="en">Weapons</span><span class="es">Armas</span></span>
         <span class="stat">✖ <span class="en">Never</span><span class="es">Nunca</span></span>
       </div>
       <div class="pi never" data-comment-anchor="063a8a1c26-div">
-        <div class="ico-tile"><svg viewBox="0 0 48 48" fill="none"><circle cx="22" cy="30" r="11" fill="currentColor" opacity=".18"/><circle cx="22" cy="30" r="11" stroke="currentColor" stroke-width="2.2"/><path d="M22 19V11M28 13l4-3M16 13l-4-3" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M30 11l3-1m4 1l1-3m-1 7l3 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="17" cy="27" r="2" fill="#fff" opacity=".55"/></svg></div>
+        <div class="ico-tile"><svg viewBox="0 0 48 48" fill="none"><rect x="7" y="21" width="25" height="8" rx="4" fill="currentColor" opacity=".15"/><rect x="7" y="21" width="25" height="8" rx="4" stroke="currentColor" stroke-width="2.4"/><rect x="9" y="31" width="25" height="8" rx="4" fill="currentColor" opacity=".15"/><rect x="9" y="31" width="25" height="8" rx="4" stroke="currentColor" stroke-width="2.4"/><path d="M32 24c4.5-1.5 7-4.5 7.5-9" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M39 10l1-3M43 13l3-1.5M36 8l-1.5-2.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></div>
         <span><span class="en">Explosives</span><span class="es">Explosivos</span></span>
         <span class="stat">✖ <span class="en">Never</span><span class="es">Nunca</span></span>
       </div>
       <div class="pi never">
-        <div class="ico-tile"><svg viewBox="0 0 48 48" fill="none"><path d="M24 8c2 4 6 6 6 12 0 4-3 6-3 9s3 5 3 8a9 9 0 1 1-18 0c0-3 2-5 2-7s-2-2-2-5c0-5 6-7 6-12 0-2 2-3 2-3s2 1 4-2z" fill="currentColor" opacity=".18"/><path d="M24 8c2 4 6 6 6 12 0 4-3 6-3 9s3 5 3 8a9 9 0 1 1-18 0c0-3 2-5 2-7s-2-2-2-5c0-5 6-7 6-12 0-2 2-3 2-3s2 1 4-2z" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M20 31c1 2 3 3 5 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+        <div class="ico-tile"><svg viewBox="0 0 48 48" fill="none"><path d="M9 17h18v21a3 3 0 01-3 3H12a3 3 0 01-3-3V17z" fill="currentColor" opacity=".15"/><path d="M9 17h18v21a3 3 0 01-3 3H12a3 3 0 01-3-3V17zM11 17l-4-6h22l-4 6M18 11V7" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><path d="M36 20c2.9 3.6 5.5 6.4 5.5 10a6.5 6.5 0 11-13 0c0-2.7 1.5-5.1 3.5-7.8.5 1.3 1.3 2.2 2.4 2.8.4-1.7.9-3.3 1.6-5z" fill="currentColor" opacity=".2"/><path d="M36 20c2.9 3.6 5.5 6.4 5.5 10a6.5 6.5 0 11-13 0c0-2.7 1.5-5.1 3.5-7.8.5 1.3 1.3 2.2 2.4 2.8.4-1.7.9-3.3 1.6-5z" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/></svg></div>
         <span><span class="en">Flammables</span><span class="es">Inflamables</span></span>
         <span class="stat">✖ <span class="en">Never</span><span class="es">Nunca</span></span>
       </div>
       <div class="pi checked">
-        <div class="ico-tile"><svg viewBox="0 0 48 48" fill="none"><circle cx="14" cy="34" r="5" fill="currentColor" opacity=".18"/><circle cx="34" cy="34" r="5" fill="currentColor" opacity=".18"/><circle cx="14" cy="34" r="5" stroke="currentColor" stroke-width="2.2"/><circle cx="34" cy="34" r="5" stroke="currentColor" stroke-width="2.2"/><path d="M18 31l16-22M30 31L14 9" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><circle cx="24" cy="20" r="2" fill="currentColor"/></svg></div>
+        <div class="ico-tile"><svg viewBox="0 0 48 48" fill="none"><circle cx="14" cy="35" r="5.5" fill="currentColor" opacity=".15"/><circle cx="33" cy="35" r="5.5" fill="currentColor" opacity=".15"/><circle cx="14" cy="35" r="5.5" stroke="currentColor" stroke-width="2.4"/><circle cx="33" cy="35" r="5.5" stroke="currentColor" stroke-width="2.4"/><path d="M18.5 31.5L36 8M28.5 31.5L11 8" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><circle cx="23.5" cy="21.5" r="2" fill="currentColor"/></svg></div>
         <span><span class="en">Sharp objects</span><span class="es">Objetos cortantes</span></span>
         <span class="stat">⚠ <span class="en">Checked</span><span class="es">Bodega</span></span>
       </div>
       <div class="pi checked">
-        <div class="ico-tile"><svg viewBox="0 0 48 48" fill="none"><path d="M30 8a6 6 0 0 0-6 8l-13 13a3 3 0 0 0 0 4l4 4a3 3 0 0 0 4 0l13-13a6 6 0 0 0 8-6 6 6 0 0 0-1-3l-4 4-4-1-1-4 4-4a6 6 0 0 0-4-2z" fill="currentColor" opacity=".18"/><path d="M30 8a6 6 0 0 0-6 8l-13 13a3 3 0 0 0 0 4l4 4a3 3 0 0 0 4 0l13-13a6 6 0 0 0 8-6 6 6 0 0 0-1-3l-4 4-4-1-1-4 4-4a6 6 0 0 0-4-2z" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/></svg></div>
+        <div class="ico-tile"><svg viewBox="0 0 48 48" fill="none"><path d="M40 9.5a7 7 0 01-9.3 9.3L14.5 35a4.2 4.2 0 11-6-6l16.3-16.2A7 7 0 0134 3.6l-4.2 4.2.9 5 5 .9L40 9.5z" fill="currentColor" opacity=".15"/><path d="M40 9.5a7 7 0 01-9.3 9.3L14.5 35a4.2 4.2 0 11-6-6l16.3-16.2A7 7 0 0134 3.6l-4.2 4.2.9 5 5 .9L40 9.5z" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><path d="M29 31l9.5 9.5M33 28l7 7" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></div>
         <span><span class="en">Tools &gt; 7 in</span><span class="es">Herram. &gt; 18 cm</span></span>
         <span class="stat">⚠ <span class="en">Checked</span><span class="es">Bodega</span></span>
       </div>
       <div class="pi allowed">
-        <div class="ico-tile"><svg viewBox="0 0 48 48" fill="none"><rect x="8" y="12" width="32" height="20" rx="2" fill="currentColor" opacity=".18"/><rect x="8" y="12" width="32" height="20" rx="2" stroke="currentColor" stroke-width="2.2"/><rect x="12" y="16" width="24" height="12" rx="1" stroke="currentColor" stroke-width="1.6" opacity=".55"/><path d="M4 36h40l-2 4H6z" fill="currentColor" opacity=".18"/><path d="M4 36h40l-2 4H6z" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/></svg></div>
+        <div class="ico-tile"><svg viewBox="0 0 48 48" fill="none"><rect x="9" y="9" width="30" height="22" rx="3" fill="currentColor" opacity=".15"/><rect x="9" y="9" width="30" height="22" rx="3" stroke="currentColor" stroke-width="2.4"/><rect x="13" y="13" width="22" height="14" rx="1.5" stroke="currentColor" stroke-width="1.8" opacity=".5"/><path d="M5 35h38l-2.4 4.4a2 2 0 01-1.8 1.1H9.2a2 2 0 01-1.8-1.1L5 35z" fill="currentColor" opacity=".15"/><path d="M5 35h38l-2.4 4.4a2 2 0 01-1.8 1.1H9.2a2 2 0 01-1.8-1.1L5 35z" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><path d="M21 37.8h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
         <span><span class="en">Laptop</span><span class="es">Laptop</span></span>
         <span class="stat">✔ <span class="en">Carry-on</span><span class="es">Mano</span></span>
       </div>
       <div class="pi allowed">
-        <div class="ico-tile"><svg viewBox="0 0 48 48" fill="none"><rect x="14" y="6" width="14" height="30" rx="3" fill="currentColor" opacity=".18"/><rect x="14" y="6" width="14" height="30" rx="3" stroke="currentColor" stroke-width="2.2"/><line x1="18" y1="10" x2="24" y2="10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="21" cy="32" r="1.6" fill="currentColor"/><rect x="28" y="14" width="14" height="20" rx="2" fill="currentColor" opacity=".12"/><rect x="28" y="14" width="14" height="20" rx="2" stroke="currentColor" stroke-width="2" opacity=".7"/><circle cx="35" cy="31" r="1.2" fill="currentColor" opacity=".7"/></svg></div>
+        <div class="ico-tile"><svg viewBox="0 0 48 48" fill="none"><rect x="6" y="10" width="22" height="32" rx="4" fill="currentColor" opacity=".12"/><rect x="6" y="10" width="22" height="32" rx="4" stroke="currentColor" stroke-width="2.2" opacity=".7"/><rect x="22" y="6" width="18" height="32" rx="4" fill="#fff"/><rect x="22" y="6" width="18" height="32" rx="4" fill="currentColor" opacity=".15"/><rect x="22" y="6" width="18" height="32" rx="4" stroke="currentColor" stroke-width="2.4"/><path d="M28.5 10.5h5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="31" cy="33" r="1.8" fill="currentColor"/></svg></div>
         <span><span class="en">Phone &amp; tablet</span><span class="es">Móvil y tablet</span></span>
         <span class="stat">✔ <span class="en">Carry-on</span><span class="es">Mano</span></span>
       </div>
       <div class="pi allowed">
-        <div class="ico-tile"><svg viewBox="0 0 48 48" fill="none"><rect x="14" y="10" width="20" height="6" rx="1.5" fill="currentColor" opacity=".25"/><rect x="14" y="10" width="20" height="6" rx="1.5" stroke="currentColor" stroke-width="2.2"/><rect x="16" y="16" width="16" height="24" rx="3" fill="currentColor" opacity=".15"/><rect x="16" y="16" width="16" height="24" rx="3" stroke="currentColor" stroke-width="2.2"/><path d="M24 22v10M19 27h10" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></div>
+        <div class="ico-tile"><svg viewBox="0 0 48 48" fill="none"><rect x="10" y="12" width="20" height="6" rx="2" fill="currentColor" opacity=".3"/><rect x="10" y="12" width="20" height="6" rx="2" stroke="currentColor" stroke-width="2.4"/><rect x="12" y="18" width="16" height="24" rx="3.5" fill="currentColor" opacity=".12"/><rect x="12" y="18" width="16" height="24" rx="3.5" stroke="currentColor" stroke-width="2.4"/><path d="M20 24.5v9M15.5 29h9" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><ellipse cx="37" cy="35.5" rx="6.5" ry="4.5" transform="rotate(-24 37 35.5)" fill="currentColor" opacity=".15"/><ellipse cx="37" cy="35.5" rx="6.5" ry="4.5" transform="rotate(-24 37 35.5)" stroke="currentColor" stroke-width="2.2"/><path d="M34 38l6-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></div>
         <span><span class="en">Medications</span><span class="es">Medicamentos</span></span>
         <span class="stat">✔ <span class="en">Carry-on</span><span class="es">Mano</span></span>
       </div>
+      <div class="pi cabin">
+        <div class="ico-tile"><svg viewBox="0 0 48 48" fill="none"><rect x="6" y="15" width="32" height="18" rx="5" fill="currentColor" opacity=".15"/><rect x="6" y="15" width="32" height="18" rx="5" stroke="currentColor" stroke-width="2.4"/><path d="M38 20h4a1.5 1.5 0 011.5 1.5v5A1.5 1.5 0 0142 28h-4" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><path d="M23 17l-5.5 8.5h4.5L19.5 32l8-9.5h-4.5L26 17h-3z" fill="currentColor"/></svg></div>
+        <span><span class="en">Power banks</span><span class="es">Baterías externas</span></span>
+        <span class="stat">✔ <span class="en">Cabin only</span><span class="es">Solo cabina</span></span>
+      </div>
+      <div class="pi cabin">
+        <div class="ico-tile"><svg viewBox="0 0 48 48" fill="none"><rect x="5" y="20" width="27" height="9" rx="4.5" fill="currentColor" opacity=".15"/><rect x="5" y="20" width="27" height="9" rx="4.5" stroke="currentColor" stroke-width="2.4"/><rect x="32" y="21.5" width="6" height="6" rx="2" fill="currentColor" opacity=".55"/><path d="M41.5 18.5c2.2 2.2 2.2 4.3 0 6.5M45 15c3.4 3.8 3.4 7.6 0 11.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" opacity=".75"/><circle cx="10.5" cy="24.5" r="1.6" fill="currentColor"/></svg></div>
+        <span><span class="en">Vapes &amp; e-cigs</span><span class="es">Vapes y cig. electr.</span></span>
+        <span class="stat">✔ <span class="en">Cabin only</span><span class="es">Solo cabina</span></span>
+      </div>
+    </div>
+    <div class="callout warning" style="margin-top:18px">
+      <strong>⚡ <span class="en">Lithium batteries — updated rules (2025–2026).</span><span class="es">Baterías de litio — reglas actualizadas (2025–2026).</span></strong>
+      <span class="en"> Power banks and spare lithium batteries must ALWAYS travel in the cabin — never inside checked bags. Up to 100 Wh (≈ 27,000 mAh) needs no approval; 100–160 Wh requires airline approval; over 160 Wh is forbidden. New: many airlines now prohibit <b>using or charging</b> power banks during the flight and ask you to keep them in sight (seat pocket — not the overhead bin). Devices with damaged or swollen batteries will be refused at security. Always check your operating airline's current policy.</span>
+      <span class="es"> Las power banks y baterías de litio de repuesto van SIEMPRE en cabina — nunca dentro de la maleta documentada. Hasta 100 Wh (≈ 27,000 mAh) no requieren aprobación; de 100 a 160 Wh requieren aprobación de la aerolínea; más de 160 Wh están prohibidas. Novedad: muchas aerolíneas ya prohíben <b>usar o cargar</b> power banks durante el vuelo y piden mantenerlas a la vista (bolsillo del asiento — no en el compartimento superior). Equipos con baterías dañadas o hinchadas serán rechazados en seguridad. Verifica siempre la política vigente de tu aerolínea operadora.</span>
     </div>
   </div>
 
@@ -1738,8 +1900,23 @@ a{color:var(--navy-700);text-decoration:none}
       <!-- scroll hint -->
       <div class="ci3d-hint" id="ciHint"><span class="m"></span><span class="en">Scroll to walk through</span><span class="es">Desplázate para avanzar</span></div>
 
+      <!-- focus-mode hint -->
+      <div class="x3d-click-hint"><span class="en">Click the phone to advance · ESC to exit</span><span class="es">Haz clic en el teléfono para avanzar · ESC para salir</span></div>
+
       <!-- controls -->
       <div class="ci3d-controls">
+        <div class="st-extra">
+          <button id="ciPlay" type="button" aria-label="Auto-play steps">
+            <svg class="ic-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            <svg class="ic-pause" viewBox="0 0 24 24" fill="currentColor" style="display:none"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+            <span class="lbl">Auto</span>
+          </button>
+          <button id="ciExpand" type="button" aria-label="Expand">
+            <svg class="ic-max" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5"/></svg>
+            <svg class="ic-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="display:none"><path d="M6 6l12 12M18 6L6 18"/></svg>
+            <span class="lbl"><span class="en">Expand</span><span class="es">Ampliar</span></span>
+          </button>
+        </div>
         <div class="ci3d-nav"><button id="ciPrev" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button></div>
         <div class="ci3d-prog" id="ciProg"></div>
         <div class="ci3d-count" id="ciCount"><b>01</b> / 08</div>
@@ -1944,6 +2121,29 @@ a{color:var(--navy-700);text-decoration:none}
   </div>
 </div>
 
+  <div class="gtk reveal">
+    <h4><span class="badge">!</span><span class="en">Good to know — when online check-in is not enough</span><span class="es">Importante — cuándo el check-in en línea no basta</span></h4>
+    <ul>
+      <li>
+        <b>Codeshare:</b>
+        <span class="en"> if your ticket is a codeshare — e.g., a United flight from Panama to Washington <i>operated by Copa</i> — online check-in may not issue your boarding pass. Go to the <b>operating airline's counter</b> at the airport to print it.</span>
+        <span class="es"> si tu boleto es codeshare — ej. un vuelo de United de Panamá a Washington <i>operado por Copa</i> — el check-in en línea puede no emitir tu pase de abordar. Acércate al <b>counter de la aerolínea operadora</b> en el aeropuerto para imprimirlo.</span>
+      </li>
+      <li>
+        <span class="en"><b>Document verification:</b> if your digital boarding pass shows a note like “the airline must verify your travel documents”, stop by the <b>kiosk or counter</b> to have them checked and get a printed pass.</span>
+        <span class="es"><b>Verificación de documentos:</b> si tu pase digital muestra una anotación como “la aerolínea debe verificar tus documentos de viaje”, pasa al <b>kiosco o counter</b> para que los revisen y te impriman el pase físico.</span>
+      </li>
+      <li>
+        <span class="en"><b>No seat selected?</b> The airline confirms availability, so your boarding pass can only be issued about <b>1 hour before departure</b>. Confirm — or pay for — your seat in advance to check in early without surprises.</span>
+        <span class="es"><b>¿Sin asiento seleccionado?</b> La aerolínea es quien confirma la disponibilidad, así que tu pase solo podrá emitirse aproximadamente <b>1 hora antes del vuelo</b>. Confirma — o paga — tu asiento con anticipación para hacer el check-in temprano y sin sorpresas.</span>
+      </li>
+      <li class="app">
+        <span class="en"><b>Download the app</b> of your <b>operating</b> airline (the one flying the plane): live gate changes, delays and boarding notifications go there first.</span>
+        <span class="es"><b>Descarga la app</b> de tu aerolínea <b>operadora</b> (la que vuela el avión): los cambios de puerta, retrasos y avisos de abordaje llegan ahí primero.</span>
+      </li>
+    </ul>
+  </div>
+
   <div class="callout success reveal" style="margin-top:24px">
     <strong><span class="en">Already checked in?</span><span class="es">¿Ya tienes check-in?</span></strong>
     <span class="en"> Save the boarding pass to your phone's wallet (Apple Wallet / Google Wallet). Carry a printed backup in your bag in case your battery dies.</span>
@@ -2017,7 +2217,21 @@ a{color:var(--navy-700);text-decoration:none}
 
       <div class="kk3d-hint" id="kkHint"><span class="m"></span><span class="en">Scroll to walk through</span><span class="es">Desplázate para avanzar</span></div>
 
+      <div class="x3d-click-hint"><span class="en">Click the kiosk to advance · ESC to exit</span><span class="es">Haz clic en el kiosco para avanzar · ESC para salir</span></div>
+
       <div class="kk3d-controls">
+        <div class="st-extra">
+          <button id="kkPlay" type="button" aria-label="Auto-play steps">
+            <svg class="ic-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            <svg class="ic-pause" viewBox="0 0 24 24" fill="currentColor" style="display:none"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+            <span class="lbl">Auto</span>
+          </button>
+          <button id="kkExpand" type="button" aria-label="Expand">
+            <svg class="ic-max" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5"/></svg>
+            <svg class="ic-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="display:none"><path d="M6 6l12 12M18 6L6 18"/></svg>
+            <span class="lbl"><span class="en">Expand</span><span class="es">Ampliar</span></span>
+          </button>
+        </div>
         <div class="kk3d-nav"><button id="kkPrev" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button></div>
         <div class="kk3d-prog" id="kkProg"></div>
         <div class="kk3d-count" id="kkCount"><b>01</b> / 07</div>
@@ -2189,7 +2403,30 @@ a{color:var(--navy-700);text-decoration:none}
   </div>
 </div>
 
-  <div class="callout tip reveal" style="margin-top:28px">
+  <div class="gtk reveal">
+    <h4><span class="badge">!</span><span class="en">Good to know — when the kiosk sends you to the counter</span><span class="es">Importante — cuándo el kiosco te manda al counter</span></h4>
+    <ul>
+      <li>
+        <b>Codeshare:</b>
+        <span class="en"> on codeshare tickets — e.g., a United flight from Panama to Washington <i>operated by Copa</i> — the kiosk may not find your booking or may not print the pass. Go directly to the <b>operating airline's counter</b>.</span>
+        <span class="es"> con boletos codeshare — ej. un vuelo de United de Panamá a Washington <i>operado por Copa</i> — el kiosco puede no encontrar tu reserva o no imprimir el pase. Ve directo al <b>counter de la aerolínea operadora</b>.</span>
+      </li>
+      <li>
+        <span class="en"><b>Document verification:</b> if your digital pass carries a note that the airline must verify your travel documents, the kiosk or the counter can verify them and print a physical boarding pass.</span>
+        <span class="es"><b>Verificación de documentos:</b> si tu pase digital tiene la anotación de que la aerolínea debe verificar tus documentos de viaje, en el kiosco o el counter pueden verificarlos e imprimirte el pase físico.</span>
+      </li>
+      <li>
+        <span class="en"><b>No seat selected?</b> The airline confirms seat availability, so the kiosk can only print your pass about <b>1 hour before departure</b>. Confirm or pay for your seat ahead of time to check in earlier.</span>
+        <span class="es"><b>¿Sin asiento seleccionado?</b> La aerolínea confirma la disponibilidad, así que el kiosco solo podrá imprimir tu pase aproximadamente <b>1 hora antes del vuelo</b>. Confirma o paga tu asiento con anticipación para hacer el check-in más temprano.</span>
+      </li>
+      <li class="app">
+        <span class="en"><b>Download the operating airline's app</b> for live flight tracking and notifications — gate changes show up there before they reach the screens.</span>
+        <span class="es"><b>Descarga la app de la aerolínea operadora</b> para seguimiento del vuelo y notificaciones en vivo — los cambios de puerta aparecen ahí antes que en las pantallas.</span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="callout tip reveal" style="margin-top:24px">
     <strong><span class="en">Kiosk not working?</span><span class="es">¿El kiosco no funciona?</span></strong>
     <span class="en"> Just go to any staffed check-in counter for your airline — they'll help you.</span>
     <span class="es"> Ve a cualquier mostrador atendido de tu aerolínea — te ayudarán.</span>
@@ -2224,6 +2461,78 @@ a{color:var(--navy-700);text-decoration:none}
         <div class="sub"><span class="en">e.g. Gate 209, 215, 223</span><span class="es">ej. Puerta 209, 215, 223</span></div>
       </div>
     </div>
+  </div>
+
+  <!-- ROUTE FINDER TOOL -->
+  <div class="rf reveal" id="route-finder">
+    <div class="rf-head">
+      <span class="t-label coral"><span class="en">Interactive tool</span><span class="es">Herramienta interactiva</span></span>
+      <h3><span class="en">Which terminal do I use — and how do I reach my gate?</span><span class="es">¿Por dónde entro y cómo llego a mi puerta?</span></h3>
+      <p>
+        <span class="en">Pick your <b>operating</b> airline (the one flying the plane — check “operated by” on your ticket), tell us about your bags, and we'll map your route.</span>
+        <span class="es">Elige tu aerolínea <b>operadora</b> (la que vuela el avión — revisa el “operated by” de tu boleto), indícanos tu equipaje y te trazamos la ruta.</span>
+      </p>
+    </div>
+    <div class="rf-tabs" role="tablist">
+      <button type="button" id="rfTabDep" class="active" onclick="rfMode('dep')">🛫 <span class="en">Departing Panama</span><span class="es">Saliendo de Panamá</span></button>
+      <button type="button" id="rfTabArr" onclick="rfMode('arr')">🛬 <span class="en">Arriving in Panama</span><span class="es">Llegando a Panamá</span></button>
+    </div>
+    <div class="rf-grid">
+      <div class="rf-field">
+        <label for="rfAirline"><span class="en">Operating airline</span><span class="es">Aerolínea operadora</span></label>
+        <select id="rfAirline">
+          <optgroup label="Terminal 2">
+            <option>Copa Airlines</option>
+            <option>Air France</option>
+            <option>KLM</option>
+            <option>United Airlines</option>
+          </optgroup>
+          <optgroup label="Terminal 1">
+            <option>Aeromexico</option>
+            <option>Air Europa</option>
+            <option>American Airlines</option>
+            <option>Avianca</option>
+            <option>Cayman Airways</option>
+            <option>Condor</option>
+            <option>Delta Air Lines</option>
+            <option>Iberia</option>
+            <option>Sunrise Airways</option>
+            <option>Turkish Airlines</option>
+          </optgroup>
+        </select>
+      </div>
+      <div class="rf-field" id="rfGateWrap">
+        <label for="rfGate"><span class="en">Gate (optional · from your boarding pass)</span><span class="es">Puerta (opcional · de tu pase)</span></label>
+        <input id="rfGate" inputmode="numeric" maxlength="3" placeholder="101–147 · 201–225">
+      </div>
+      <div class="rf-field">
+        <label id="rfBagLabel"><span class="en">Checking bags?</span><span class="es">¿Documentas equipaje?</span></label>
+        <div class="rf-seg">
+          <button type="button" id="rfBagYes" class="on" onclick="rfBags(true)"><span class="en">Yes, checked bags</span><span class="es">Sí, documento</span></button>
+          <button type="button" id="rfBagNo" onclick="rfBags(false)"><span class="en">Carry-on only</span><span class="es">Solo carry-on</span></button>
+        </div>
+      </div>
+    </div>
+    <button type="button" class="rf-go" onclick="rfRun()">
+      <span class="en">Show my route</span><span class="es">Ver mi ruta</span>
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-5-5l5 5-5 5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="rf-out" id="rfOut" aria-live="polite"></div>
+  </div>
+
+  <!-- FULL AIRPORT MAP -->
+  <div class="fullmap reveal">
+    <div class="head">
+      <div>
+        <span class="t-label coral">PTY · <span class="en">Both terminals</span><span class="es">Ambas terminales</span></span>
+        <h3><span class="en">Full airport map — find your gate</span><span class="es">Mapa general del aeropuerto — ubica tu puerta</span></h3>
+      </div>
+      <span class="t-label"><span class="en">Tap to zoom</span><span class="es">Toca para ampliar</span></span>
+    </div>
+    <figure onclick="openLightboxSrc('assets/tocumen-gates-map.jpg','Tocumen Intl · Terminal 1 + Terminal 2')">
+      <img src="assets/tocumen-gates-map.jpg" loading="lazy" alt="Mapa del Aeropuerto Internacional de Tocumen: Terminal 1 (puertas 101–147) y Terminal 2 (puertas 201–225), con shuttle interterminal, Sala VIP, migración y puntos de información">
+      <span class="hintz">🔍 <span class="en">Zoom</span><span class="es">Ampliar</span></span>
+    </figure>
   </div>
 
   <div class="term-tabs reveal" role="tablist">
@@ -2333,6 +2642,12 @@ a{color:var(--navy-700);text-decoration:none}
       <span class="flow-arrow">→</span>
       <div class="flow-step final"><span class="num">6</span><span><span class="en">Your Gate</span><span class="es">Tu Puerta</span> ✈</span></div>
     </div>
+  </div>
+
+  <div class="callout tip reveal" style="margin-top:24px">
+    <strong>📱 <span class="en">Track your flight live.</span><span class="es">Sigue tu vuelo en vivo.</span></strong>
+    <span class="en"> Download the app of your <b>operating</b> airline (Copa, United, Avianca, etc.) before heading to the airport — gate changes, delays and boarding calls arrive there first, and your boarding pass lives offline in the app.</span>
+    <span class="es"> Descarga la app de tu aerolínea <b>operadora</b> (Copa, United, Avianca, etc.) antes de ir al aeropuerto — los cambios de puerta, retrasos y llamados de abordaje llegan ahí primero, y tu pase de abordar queda disponible sin conexión en la app.</span>
   </div>
 </section>
 
@@ -2751,6 +3066,7 @@ function lbZoom(d){
 }
 function lbNav(dir,e){
   e&&e.stopPropagation();
+  if(lbState.t==='src')return;
   const levels=[100,200,300];
   let idx=levels.indexOf(lbState.l)+dir;
   if(idx<0)idx=levels.length-1;if(idx>=levels.length)idx=0;
@@ -2769,7 +3085,7 @@ const navObserver=new IntersectionObserver((entries)=>{
   entries.forEach(e=>{
     if(e.isIntersecting){
       const id=e.target.id;
-      document.querySelectorAll('.rail a, .side-menu a').forEach(a=>{
+      document.querySelectorAll('.rail a, .side-menu a, .topnav-links a').forEach(a=>{
         a.classList.toggle('current', a.dataset.target===id);
       });
     }
@@ -2788,6 +3104,160 @@ document.addEventListener('keydown',e=>{
     if(e.key==='0')lbZoom('reset');
   }
 });
+
+/* ============ LIGHTBOX — direct image (full airport map) ============ */
+function openLightboxSrc(src,meta){
+  lbState={t:'src',l:0,zoom:1};
+  const lbImg=document.getElementById('lbImg');
+  lbImg.src=src;lbImg.style.transform='scale(1)';lbImg.style.display='block';
+  document.getElementById('lbMeta').textContent=meta||'';
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+/* ============ CHECKLIST EXPORT ============ */
+function exportChecklist(mode){
+  const lang=document.documentElement.dataset.lang||'en';
+  const items=[...document.querySelectorAll('.cl-item')].map(el=>{
+    const lab=el.querySelector('.cl-label .'+lang)||el.querySelector('.cl-label span');
+    return {text:lab?lab.textContent.trim():'',done:el.classList.contains('checked')};
+  });
+  const title=lang==='es'?'Checklist de viaje — Guía del Viajero Primerizo':'Travel Checklist — First-Time Traveler Guide';
+  const tip=lang==='es'?'Para vuelos internacionales desde Tocumen (PTY), llega al menos 3 horas antes de tu salida.':'For international flights from Tocumen (PTY), arrive at least 3 hours before departure.';
+  const appTip=lang==='es'?'Descarga la app de tu aerolínea operadora para notificaciones en vivo.':'Download your operating airline’s app for live notifications.';
+  const emg=(lang==='es'?'Emergencia 24/7':'24/7 Emergency')+': +507 6612 4677';
+  const dateStr=new Date().toLocaleDateString(lang==='es'?'es-PA':'en-US',{year:'numeric',month:'long',day:'numeric'});
+  if(mode==='txt'){
+    const txt=title+'\nCWTSatoTravel · '+dateStr+'\n\n'
+      +items.map(i=>(i.done?'[x] ':'[ ] ')+i.text).join('\n')
+      +'\n\n• '+tip+'\n• '+appTip+'\n• '+emg+'\n';
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(new Blob([txt],{type:'text/plain;charset=utf-8'}));
+    a.download=lang==='es'?'checklist-de-viaje.txt':'travel-checklist.txt';
+    document.body.appendChild(a);a.click();a.remove();
+    return;
+  }
+  const w=window.open('','_blank');
+  if(!w){alert(lang==='es'?'Permite las ventanas emergentes para poder imprimir.':'Please allow pop-ups to print.');return;}
+  const rows=items.map(i=>'<li><span class="box">'+(i.done?'✓':'')+'</span><span>'+i.text+'</span></li>').join('');
+  w.document.write('<!DOCTYPE html><html><head><meta charset="utf-8"><title>'+title+'</title><style>'
+    +'body{font-family:"Segoe UI",Arial,sans-serif;color:#1E2830;max-width:680px;margin:40px auto;padding:0 24px}'
+    +'h1{font-size:22px;color:#0C2D63;margin:0 0 2px}.sub{color:#7A8899;font-size:11px;margin-bottom:24px;letter-spacing:.08em;text-transform:uppercase;font-weight:700}'
+    +'ul{list-style:none;padding:0;margin:0 0 26px}li{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px solid #DDE4EC;font-size:15px}'
+    +'.box{width:18px;height:18px;border:2px solid #0F3C78;border-radius:5px;flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#2E7D32}'
+    +'.tip{background:#FFF7EC;border:1px solid #FFD9A8;border-radius:10px;padding:12px 16px;font-size:13px;color:#5d3800;margin-bottom:10px}'
+    +'.tip.blue{background:#F2F8FF;border-color:#D7E8FB;color:#0c2d63}'
+    +'.foot{font-size:11px;color:#7A8899;margin-top:26px;border-top:1px solid #DDE4EC;padding-top:12px}'
+    +'@media print{body{margin:10mm auto}}'
+    +'</st'+'yle></head><body>'
+    +'<h1>'+title+'</h1><div class="sub">CWTSatoTravel · '+dateStr+'</div>'
+    +'<ul>'+rows+'</ul>'
+    +'<div class="tip">⏰ '+tip+'</div>'
+    +'<div class="tip blue">📱 '+appTip+'</div>'
+    +'<div class="foot">'+emg+' · First-Time Traveler Guide</div>'
+    +'</body></html>');
+  w.document.close();w.focus();
+  setTimeout(function(){w.print();},400);
+}
+
+/* ============ ROUTE FINDER ============ */
+const RF_TERM={
+  'Copa Airlines':2,'Air France':2,'KLM':2,'United Airlines':2,
+  'Aeromexico':1,'Air Europa':1,'American Airlines':1,'Avianca':1,'Cayman Airways':1,
+  'Condor':1,'Delta Air Lines':1,'Iberia':1,'Sunrise Airways':1,'Turkish Airlines':1
+};
+let rfM='dep',rfB=true,rfStepN=1;
+const rfArrow='<span class="flow-arrow">→</span>';
+function rfMode(m){
+  rfM=m;
+  document.getElementById('rfTabDep').classList.toggle('active',m==='dep');
+  document.getElementById('rfTabArr').classList.toggle('active',m==='arr');
+  document.getElementById('rfGateWrap').style.display=m==='dep'?'':'none';
+  document.getElementById('rfBagLabel').innerHTML=m==='dep'
+    ?'<span class="en">Checking bags?</span><span class="es">¿Documentas equipaje?</span>'
+    :'<span class="en">Did you check bags?</span><span class="es">¿Tienes equipaje documentado?</span>';
+  document.getElementById('rfOut').classList.remove('show');
+}
+function rfBags(v){
+  rfB=v;
+  document.getElementById('rfBagYes').classList.toggle('on',v);
+  document.getElementById('rfBagNo').classList.toggle('on',!v);
+}
+function rfStep(en,es,final){
+  return '<div class="flow-step'+(final?' final':'')+'"><span class="num">'+(rfStepN++)+'</span><span><span class="en">'+en+'</span><span class="es">'+es+'</span></span></div>';
+}
+function rfRun(){
+  const al=document.getElementById('rfAirline').value;
+  const term=RF_TERM[al]||1;
+  const out=document.getElementById('rfOut');
+  let html='';
+  rfStepN=1;
+  if(rfM==='dep'){
+    const gateRaw=(document.getElementById('rfGate').value||'').trim();
+    const g=parseInt(gateRaw,10);
+    const gateTerm=(g>=101&&g<=147)?1:(g>=201&&g<=225)?2:null;
+    const steps=[];
+    let verdEn,verdEs,subEn,subEs;
+    if(rfB){
+      verdEn='Check in at <b>Terminal '+term+'</b> — Level 200';
+      verdEs='Haz tu check-in en la <b>Terminal '+term+'</b> — Nivel 200';
+      subEn=al+' operates from Terminal '+term+'. With checked bags you must enter and check in there.';
+      subEs=al+' opera desde la Terminal '+term+'. Con equipaje documentado debes entrar y hacer el check-in ahí.';
+      steps.push(['Enter Terminal '+term+' · L200','Entra a la Terminal '+term+' · N200']);
+      steps.push(['Check-in / bag drop','Check-in / entrega de maletas']);
+    }else{
+      verdEn='Carry-on only: enter through <b>either terminal</b>';
+      verdEs='Solo carry-on: entra por <b>cualquier terminal</b>';
+      subEn='With a digital boarding pass and no checked bags you can enter through Terminal 1 or 2'+(gateTerm?' — entering through Terminal '+gateTerm+' leaves you closest to your gate.':'.');
+      subEs='Con pase digital y sin equipaje documentado puedes entrar por la Terminal 1 o la 2'+(gateTerm?' — entrar por la Terminal '+gateTerm+' te deja más cerca de tu puerta.':'.');
+      steps.push([gateTerm?'Enter Terminal '+gateTerm:'Enter T1 or T2',gateTerm?'Entra a la Terminal '+gateTerm:'Entra por T1 o T2']);
+    }
+    steps.push(['Immigration','Migración']);
+    steps.push(['Security / Customs','Seguridad / Aduanas']);
+    const startTerm=rfB?term:(gateTerm||term);
+    if(gateTerm&&gateTerm!==startTerm){
+      steps.push(['Interterminal connection → T'+gateTerm,'Conexión interterminal → T'+gateTerm]);
+    }
+    steps.push([gateTerm?'Gate '+g+' ✈':'Your gate ✈',gateTerm?'Puerta '+g+' ✈':'Tu puerta ✈']);
+    html+='<div class="rf-verdict"><div class="ico">✈</div><div><div class="t-big"><span class="en">'+verdEn+'</span><span class="es">'+verdEs+'</span></div><div class="t-sub"><span class="en">'+subEn+'</span><span class="es">'+subEs+'</span></div></div></div>';
+    html+='<div class="flow-row">'+steps.map(function(s,i){return rfStep(s[0],s[1],i===steps.length-1);}).join(rfArrow)+'</div>';
+    const notes=[];
+    if(gateRaw&&!gateTerm){notes.push(['Gate “'+gateRaw+'” doesn’t look like a PTY gate (101–147 / 201–225) — double-check your boarding pass.','La puerta “'+gateRaw+'” no parece de PTY (101–147 / 201–225) — verifica tu pase de abordar.']);}
+    if(!gateRaw){notes.push(['Gates starting with 1 are in Terminal 1; gates starting with 2 are in Terminal 2.','Las puertas que empiezan con 1 están en la Terminal 1; las que empiezan con 2, en la Terminal 2.']);}
+    if(gateTerm&&gateTerm!==startTerm){notes.push(['After security, follow the interterminal connection signs (shuttle T1 ↔ T2: by P209 in Terminal 1, by P104/105 in Terminal 2). Allow 15–20 extra minutes.','Después del filtro, sigue la señalización de conexión interterminal (shuttle T1 ↔ T2: junto a P209 en la Terminal 1 y P104/105 en la Terminal 2). Calcula 15–20 minutos extra.']);}
+    notes.push(['Arrive at least 3 hours before an international departure.','Llega al menos 3 horas antes de un vuelo internacional.']);
+    notes.push(['Download the '+al+' app for live gate and boarding notifications.','Descarga la app de '+al+' para avisos de puerta y abordaje en vivo.']);
+    html+='<div class="rf-notes">'+notes.map(function(n){return '<div><span class="en">'+n[0]+'</span><span class="es">'+n[1]+'</span></div>';}).join('')+'</div>';
+  }else{
+    const steps=[];
+    let verdEn,verdEs,subEn,subEs;
+    steps.push(['Land & deplane','Aterrizas y desembarcas']);
+    steps.push(['Immigration','Migración']);
+    if(rfB){
+      verdEn='Pick up your bags at <b>Terminal '+term+'</b>';
+      verdEs='Retira tu equipaje en la <b>Terminal '+term+'</b>';
+      subEn='Your flight is operated by '+al+', which arrives at Terminal '+term+' — baggage claim for your flight is there.';
+      subEs='Tu vuelo lo opera '+al+', que llega a la Terminal '+term+' — el reclamo de equipaje de tu vuelo está ahí.';
+      steps.push(['Baggage claim · Terminal '+term,'Reclamo de equipaje · Terminal '+term]);
+    }else{
+      verdEn='Carry-on only: head straight out';
+      verdEs='Solo carry-on: sal directo';
+      subEn='No checked bags to wait for — after immigration and customs you can exit right away.';
+      subEs='No tienes maletas que esperar — después de migración y aduanas puedes salir de inmediato.';
+    }
+    steps.push(['Customs','Aduanas']);
+    steps.push(['Arrivals exit ✈','Salida de llegadas ✈']);
+    html+='<div class="rf-verdict"><div class="ico">🛬</div><div><div class="t-big"><span class="en">'+verdEn+'</span><span class="es">'+verdEs+'</span></div><div class="t-sub"><span class="en">'+subEn+'</span><span class="es">'+subEs+'</span></div></div></div>';
+    html+='<div class="flow-row">'+steps.map(function(s,i){return rfStep(s[0],s[1],i===steps.length-1);}).join(rfArrow)+'</div>';
+    const notes=[
+      ['Ground transport and taxis are available at both terminals.','Transporte terrestre y taxis disponibles en ambas terminales.'],
+      ['Download the '+al+' app to track your flight and get live updates.','Descarga la app de '+al+' para rastrear tu vuelo y recibir avisos en vivo.']
+    ];
+    html+='<div class="rf-notes">'+notes.map(function(n){return '<div><span class="en">'+n[0]+'</span><span class="es">'+n[1]+'</span></div>';}).join('')+'</div>';
+  }
+  out.innerHTML=html;
+  out.classList.add('show');
+}
 </script>
 
 <!-- Section 04 · 3D Online Check-In engine -->
@@ -2852,12 +3322,67 @@ function onStep(n){
 
 const api = initCheckin3D({ model:'assets/iphone16.glb', steps:N, onStep });
 
-prevBtn.onclick = ()=> api.go(Math.max(1, api.current()-1));
-nextBtn.onclick = ()=> api.go(Math.min(N, api.current()+1));
-dots.forEach((d,i)=> d.onclick = ()=> api.go(i+1));
+// ---- autoplay + focus (expanded) mode ----
+const root = document.getElementById('ci3d'), stageEl = document.getElementById('ciStage');
+const playBtn = document.getElementById('ciPlay'), expBtn = document.getElementById('ciExpand');
+const reduceM = matchMedia('(prefers-reduced-motion:reduce)').matches;
+let autoT = null, expanded = false, savedY = 0;
+function nav(n){ n = Math.max(1, Math.min(N, n)); if (expanded) api.setStepDebug(n); else api.go(n); }
+function setPlay(on){
+  if (on && !autoT){
+    autoT = setInterval(()=>{
+      const c = api.current() || 1;
+      if (c >= N){ if (expanded) api.setStepDebug(1); else setPlay(false); return; }
+      if (expanded) api.setStepDebug(c+1); else api.go(c+1);
+    }, 4000);
+  } else if (!on && autoT){ clearInterval(autoT); autoT = null; }
+  playBtn.classList.toggle('on', !!autoT);
+  playBtn.querySelector('.ic-play').style.display = autoT ? 'none' : 'block';
+  playBtn.querySelector('.ic-pause').style.display = autoT ? 'block' : 'none';
+}
+function setExpanded(on){
+  if (on === expanded) return;
+  expanded = on;
+  if (on){
+    savedY = scrollY;
+    root.classList.add('x3d-expanded');
+    document.body.classList.add('stage-lock');
+    api.setStepDebug(api.current() || 1);
+    if (!reduceM) setPlay(true);
+  } else {
+    setPlay(false);
+    root.classList.remove('x3d-expanded');
+    document.body.classList.remove('stage-lock');
+    scrollTo({ top: savedY, behavior: 'auto' });
+    api.go(api.current() || 1);
+  }
+  expBtn.classList.toggle('on', on);
+  expBtn.querySelector('.ic-max').style.display = on ? 'none' : 'block';
+  expBtn.querySelector('.ic-x').style.display = on ? 'block' : 'none';
+}
+playBtn.onclick = ()=> setPlay(!autoT);
+expBtn.onclick = ()=> setExpanded(!expanded);
+stageEl.addEventListener('click', (e)=>{
+  if (!expanded) return;
+  if (e.target.closest('button') || e.target.closest('a') || e.target.closest('.ci3d-controls')) return;
+  setPlay(false);
+  const c = api.current() || 1;
+  api.setStepDebug(c >= N ? 1 : c + 1);
+});
+document.addEventListener('keydown', (e)=>{
+  if (!expanded) return;
+  if (e.key === 'Escape') setExpanded(false);
+  else if (e.key === 'ArrowRight'){ setPlay(false); api.setStepDebug(Math.min(N, (api.current()||1)+1)); }
+  else if (e.key === 'ArrowLeft'){ setPlay(false); api.setStepDebug(Math.max(1, (api.current()||1)-1)); }
+});
+['wheel','touchstart'].forEach(ev => addEventListener(ev, ()=>{ if (autoT && !expanded) setPlay(false); }, { passive:true }));
+
+prevBtn.onclick = ()=>{ setPlay(false); nav((api.current()||1) - 1); };
+nextBtn.onclick = ()=>{ setPlay(false); nav((api.current()||1) + 1); };
+dots.forEach((d,i)=> d.onclick = ()=>{ setPlay(false); nav(i+1); });
 addEventListener('scroll', ()=>{ hint && hint.classList.add('gone'); }, { once:true, passive:true });
 </script>
-\n
+
 <!-- Section 05 · 3D Self Check-In Kiosk engine -->
 <script type="module">
 import { initKiosk3D } from './assets/kiosk3d.js';
@@ -2914,10 +3439,66 @@ function onStep(n){
 }
 
 const api=initKiosk3D({ model:'assets/kiosk.glb', steps:N, onStep });
-prevBtn.onclick=()=>api.go(Math.max(1,api.current()-1));
-nextBtn.onclick=()=>api.go(Math.min(N,api.current()+1));
-dots.forEach((d,i)=>d.onclick=()=>api.go(i+1));
+
+// ---- autoplay + focus (expanded) mode ----
+const root = document.getElementById('kk3d'), stageEl = document.getElementById('kkStage');
+const playBtn = document.getElementById('kkPlay'), expBtn = document.getElementById('kkExpand');
+const reduceM = matchMedia('(prefers-reduced-motion:reduce)').matches;
+let autoT = null, expanded = false, savedY = 0;
+function nav(n){ n = Math.max(1, Math.min(N, n)); if (expanded) api.setStepDebug(n); else api.go(n); }
+function setPlay(on){
+  if (on && !autoT){
+    autoT = setInterval(()=>{
+      const c = api.current() || 1;
+      if (c >= N){ if (expanded) api.setStepDebug(1); else setPlay(false); return; }
+      if (expanded) api.setStepDebug(c+1); else api.go(c+1);
+    }, 4200);
+  } else if (!on && autoT){ clearInterval(autoT); autoT = null; }
+  playBtn.classList.toggle('on', !!autoT);
+  playBtn.querySelector('.ic-play').style.display = autoT ? 'none' : 'block';
+  playBtn.querySelector('.ic-pause').style.display = autoT ? 'block' : 'none';
+}
+function setExpanded(on){
+  if (on === expanded) return;
+  expanded = on;
+  if (on){
+    savedY = scrollY;
+    root.classList.add('x3d-expanded');
+    document.body.classList.add('stage-lock');
+    api.setStepDebug(api.current() || 1);
+    if (!reduceM) setPlay(true);
+  } else {
+    setPlay(false);
+    root.classList.remove('x3d-expanded');
+    document.body.classList.remove('stage-lock');
+    scrollTo({ top: savedY, behavior: 'auto' });
+    api.go(api.current() || 1);
+  }
+  expBtn.classList.toggle('on', on);
+  expBtn.querySelector('.ic-max').style.display = on ? 'none' : 'block';
+  expBtn.querySelector('.ic-x').style.display = on ? 'block' : 'none';
+}
+playBtn.onclick = ()=> setPlay(!autoT);
+expBtn.onclick = ()=> setExpanded(!expanded);
+stageEl.addEventListener('click', (e)=>{
+  if (!expanded) return;
+  if (e.target.closest('button') || e.target.closest('a') || e.target.closest('.kk3d-controls')) return;
+  setPlay(false);
+  const c = api.current() || 1;
+  api.setStepDebug(c >= N ? 1 : c + 1);
+});
+document.addEventListener('keydown', (e)=>{
+  if (!expanded) return;
+  if (e.key === 'Escape') setExpanded(false);
+  else if (e.key === 'ArrowRight'){ setPlay(false); api.setStepDebug(Math.min(N, (api.current()||1)+1)); }
+  else if (e.key === 'ArrowLeft'){ setPlay(false); api.setStepDebug(Math.max(1, (api.current()||1)-1)); }
+});
+['wheel','touchstart'].forEach(ev => addEventListener(ev, ()=>{ if (autoT && !expanded) setPlay(false); }, { passive:true }));
+
+prevBtn.onclick = ()=>{ setPlay(false); nav((api.current()||1) - 1); };
+nextBtn.onclick = ()=>{ setPlay(false); nav((api.current()||1) + 1); };
+dots.forEach((d,i)=> d.onclick = ()=>{ setPlay(false); nav(i+1); });
 addEventListener('scroll',()=>{ hint&&hint.classList.add('gone'); },{once:true,passive:true});
 </script>
-\n</body>
+</body>
 </html>
