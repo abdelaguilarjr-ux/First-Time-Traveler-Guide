@@ -52,7 +52,7 @@ export function initKiosk3D(opts){
     { ry:  10, rx: 0, s:.98 },  // 7 done
   ];
 
-  let kioskX = 0, baseScale = 1, modelReady = false;
+  let kioskX = 0, kioskY = 0, baseScale = 1, modelReady = false;
   const isWide = () => innerWidth > 920;
 
   // ---------- THREE setup ----------
@@ -197,8 +197,11 @@ export function initKiosk3D(opts){
     vw = w; vh = h;
     renderer.setSize(w, h); css.setSize(w, h);
     camera.aspect = w / h; camera.updateProjectionMatrix();
+    // mobile: captions sit in a bottom band, so shrink the kiosk and lift it
+    // into the clear upper area of the stage to avoid overlap
     kioskX = isWide() ? 1.15 : 0;
-    baseScale = isWide() ? 1 : clamp(h/760, 0.62, 1);
+    kioskY = isWide() ? 0 : 1.12;
+    baseScale = isWide() ? 1 : clamp(h/760, 0.62, 1) * 0.66;
   }
   addEventListener('resize', resize);
   new ResizeObserver(resize).observe(stage);
@@ -251,7 +254,7 @@ export function initKiosk3D(opts){
     const sc = baseScale * cur.s * P._frameScale;
     deviceWGL.rotation.set(cur.rx*D2R, cur.ry*D2R, floatZ);
     // recenter on the display panel so the top half fills the frame (lower pedestal cropped)
-    deviceWGL.position.set(kioskX, floatY + P.frameLift - P._screenY * sc, 0);
+    deviceWGL.position.set(kioskX, floatY + P.frameLift + kioskY - P._screenY * sc, 0);
     deviceWGL.scale.setScalar(sc);
     shadowMat.opacity = 0.85 - Math.abs(cur.ry)/130;
 

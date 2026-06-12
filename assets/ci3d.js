@@ -35,7 +35,7 @@ export function initCheckin3D(opts){
     { ry:  0, rx: 0, s:1.03 }, // 8 ready
   ];
 
-  let phoneX = 0, baseScale = 1, modelReady = false;
+  let phoneX = 0, phoneY = 0, baseScale = 1, modelReady = false;
   const isWide = () => innerWidth > 920;
 
   // ---------- THREE setup ----------
@@ -126,8 +126,11 @@ export function initCheckin3D(opts){
     vw = w; vh = h;
     renderer.setSize(w, h); css.setSize(w, h);
     camera.aspect = w / h; camera.updateProjectionMatrix();
+    // mobile: captions sit in a bottom band, so shrink the phone and lift it
+    // into the clear upper area of the stage to avoid overlap
     phoneX = isWide() ? 1.28 : 0;
-    baseScale = isWide() ? 1 : clamp(h/720, 0.66, 1);
+    phoneY = isWide() ? 0 : 1.05;
+    baseScale = isWide() ? 1 : clamp(h/720, 0.66, 1) * 0.58;
   }
   addEventListener('resize', resize);
   new ResizeObserver(resize).observe(stage);   // catches the first real layout
@@ -184,7 +187,7 @@ export function initCheckin3D(opts){
     const sc = baseScale * cur.s;
     for (const grp of [deviceWGL, deviceCSS]){
       grp.rotation.set(cur.rx*D2R, cur.ry*D2R, floatZ);
-      grp.position.set(phoneX, floatY, 0);
+      grp.position.set(phoneX, floatY + phoneY, 0);
       grp.scale.setScalar(sc);
     }
     shadowMat.opacity = 0.9 - Math.abs(cur.ry)/120;

@@ -14,13 +14,13 @@
   width:100%;
   margin:6px 0 0;
 }
-/* the scroll-length driver — ~110vh per step gives calm pacing */
-.kk3d-track{ position:relative; height:780vh; }
+/* free-flow: the section scrolls past normally — steps advance via buttons/auto */
+.kk3d-track{ position:relative; height:auto; }
 
-/* sticky cinematic stage — a contained, rounded panel within the content column */
+/* cinematic stage — a contained, rounded panel within the content column */
 .kk3d-stage{
-  position:sticky; top:calc(var(--nav) + 12px);
-  height:calc(100vh - var(--nav) - 30px); min-height:560px;
+  position:relative;
+  height:calc(100vh - var(--nav) - 30px); min-height:560px; max-height:820px;
   overflow:hidden; border-radius:26px;
   box-shadow:0 30px 70px -34px rgba(7,31,69,.5), 0 0 0 1px rgba(12,45,99,.06);
   background:
